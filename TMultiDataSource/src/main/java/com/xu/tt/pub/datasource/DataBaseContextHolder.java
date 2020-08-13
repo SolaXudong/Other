@@ -3,7 +3,7 @@ package com.xu.tt.pub.datasource;
 /**
  * @author XuDong 2020-08-13 23:58:03
  */
-public class TDataBaseContextHolder {
+public class DataBaseContextHolder {
 
 	public enum DataBaseType {
 		MASTER, SLAVE

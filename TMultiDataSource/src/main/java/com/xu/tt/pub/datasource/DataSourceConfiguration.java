@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration
 @EnableTransactionManagement // 开启事务
-public class TMultiDataSource {
+public class DataSourceConfiguration {
 
 	@Value("${spring.datasource.type}")
 	private Class<? extends DataSource> dataSourceType;
