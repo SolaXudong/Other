@@ -15,7 +15,8 @@ public class UserService {
 	@Autowired
 	UserMapper userMapper;
 
-	public List<User> getUserList() {
+//	@SlaveDB
+	public List<User> getUserList() throws Exception {
 		List<User> list = ListUtils.emptyIfNull(userMapper.selectAll());
 		return list;
 	}

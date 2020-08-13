@@ -114,6 +114,12 @@
 			<artifactId>commons-collections4</artifactId>
 			<version>4.4</version>
 		</dependency>
+		<!-- 【aspectj】@Aspect需要 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.8.9</version>
+		</dependency>
 
 		<!-- devtools 热部署 -->
 		<dependency>
