@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Aspect
 @Component
-public class SlaveDBAOP implements Ordered {
+public class DBAOP implements Ordered {
 
 	@Around("@annotation(routingDB)") // routingDB与下面参数名routingDB对应
 	public Object proceed(ProceedingJoinPoint point, RoutingDB routingDB) throws Throwable {
