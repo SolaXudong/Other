@@ -24,20 +24,26 @@ class ApplicationTests {
 	private DataSource masterDataSource;
 	@Resource(name = "slaveDataSource")
 	private DataSource slaveDataSource;
+	@Resource(name = "dynamicDataSource")
+	private DataSource dynamicDataSource;
 
 	@Test
 	public void testService() throws Exception {
-		log.info("########## testService");
+		log.info("########## 【test Service from different datasource】");
 		log.info("########## list: {}", JSONObject.toJSON(userService.getUserList()));
+		log.info("########## list: {}", JSONObject.toJSON(userService.getUserList1()));
+		log.info("########## list: {}", JSONObject.toJSON(userService.getUserList2()));
 	}
 
 	@Test
 	public void testDataSource() throws Exception {
-		log.info("########## testDataSource");
+		log.info("########## 【test dataSource is ok】");
 		Connection c1 = masterDataSource.getConnection();
 		log.info("########## c1: {}", c1.getMetaData().getURL());
 		Connection c2 = slaveDataSource.getConnection();
 		log.info("########## c2: {}", c2.getMetaData().getURL());
+		Connection c3 = dynamicDataSource.getConnection();
+		log.info("########## c3: {}", c3.getMetaData().getURL());
 	}
 
 }

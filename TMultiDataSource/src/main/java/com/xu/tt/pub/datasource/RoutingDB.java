@@ -10,6 +10,8 @@ import java.lang.annotation.Target;
  */
 @Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SlaveDB {
+public @interface RoutingDB {
+
+	DBContextHolder.DBType value() default DBContextHolder.DBType.MASTER;
 
 }

@@ -114,6 +114,12 @@
 			<artifactId>commons-collections4</artifactId>
 			<version>4.4</version>
 		</dependency>
+		<!-- 【guava】 -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>22.0</version>
+		</dependency>
 		<!-- 【aspectj】@Aspect需要 -->
 		<dependency>
 			<groupId>org.aspectj</groupId>

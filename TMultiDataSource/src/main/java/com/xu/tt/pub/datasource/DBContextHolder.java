@@ -5,19 +5,18 @@ package com.xu.tt.pub.datasource;
  */
 public class DBContextHolder {
 
-	public enum DataBaseType {
+	public enum DBType {
 		MASTER, SLAVE
 	}
 
-	private static final ThreadLocal<DataBaseType> contextHolder = new ThreadLocal<>();
+	private static final ThreadLocal<DBType> contextHolder = new ThreadLocal<>();
 
-	public static void setDataBaseType(DataBaseType dataBaseType) {
+	public static void setDataBaseType(DBType dataBaseType) {
 		contextHolder.set(dataBaseType);
 	}
 
-	public static DataBaseType getDataBaseType() {
-		System.out.println("########## getDataBaseType: " + contextHolder.get());
-		return contextHolder.get() == null ? DataBaseType.MASTER : contextHolder.get();
+	public static DBType getDataBaseType() {
+		return contextHolder.get() == null ? DBType.MASTER : contextHolder.get();
 	}
 
 	/**

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.xu.tt.dao.UserMapper;
 import com.xu.tt.dto.User;
+import com.xu.tt.pub.datasource.DBContextHolder;
+import com.xu.tt.pub.datasource.RoutingDB;
 
 @Service
 public class UserService {
@@ -15,8 +17,19 @@ public class UserService {
 	@Autowired
 	UserMapper userMapper;
 
-//	@SlaveDB
 	public List<User> getUserList() throws Exception {
+		List<User> list = ListUtils.emptyIfNull(userMapper.selectAll());
+		return list;
+	}
+
+	@RoutingDB(DBContextHolder.DBType.MASTER)
+	public List<User> getUserList1() throws Exception {
+		List<User> list = ListUtils.emptyIfNull(userMapper.selectAll());
+		return list;
+	}
+
+	@RoutingDB(DBContextHolder.DBType.SLAVE)
+	public List<User> getUserList2() throws Exception {
 		List<User> list = ListUtils.emptyIfNull(userMapper.selectAll());
 		return list;
 	}
