@@ -13,10 +13,12 @@ import lombok.extern.slf4j.Slf4j;
  * @author XuDong 2020-08-14 01:38:11
  */
 @Slf4j
-@Aspect
+@Aspect // 注解将一个java类定义为切面类
 @Component
 public class DBAOP implements Ordered {
 
+//	@Before("execution(* com.xu.tt.service..*.*(..))") // 在切入点开始处切入内容
+//	@After("execution(* com.xu.tt.service..*.*(..))") // 在切入点结尾处切入内容
 	@Around("@annotation(routingDB)") // routingDB与下面参数名routingDB对应
 	public Object proceed(ProceedingJoinPoint point, RoutingDB routingDB) throws Throwable {
 		try {
@@ -52,7 +54,7 @@ public class DBAOP implements Ordered {
 
 	@Override
 	public int getOrder() {
-		return 0;
+		return 0; // 负值，确保是第一个进行执行的
 	}
 
 }
