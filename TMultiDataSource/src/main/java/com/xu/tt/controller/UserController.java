@@ -23,10 +23,18 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping("/u1")
-	public String u1() throws Exception {
+	public Object u1() throws Exception {
 		log.info("########## /u1");
-		Object json = JSONObject.toJSON(userService.getUserList());
-		return json.toString();
+		Object json = JSONObject.toJSON(userService.getUserList1());
+		return json;
+	}
+
+	@ResponseBody
+	@RequestMapping("/u2")
+	public Object u2() throws Exception {
+		log.info("########## /u2");
+		Object json = JSONObject.toJSON(userService.getUserList2());
+		return json;
 	}
 
 }
