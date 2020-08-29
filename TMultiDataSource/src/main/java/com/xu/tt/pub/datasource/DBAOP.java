@@ -48,6 +48,7 @@ public class DBAOP implements Ordered {
 			}
 		} catch (Exception e) {
 			log.info("########## 该注解只能用于方法");
+			DBContextHolder.clearDataBaseType();
 			return point.proceed();
 		}
 	}

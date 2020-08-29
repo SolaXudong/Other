@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Configuration
 @EnableTransactionManagement // 开启事务
+//@AutoConfigureAfter(MainConfig.class)
 public class DBConfig {
 
 	@Value("${spring.datasource.type}")
