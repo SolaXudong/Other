@@ -9,6 +9,9 @@ import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class GeneratorDisplay {
 
 	public void generator() throws Exception {
@@ -25,13 +28,14 @@ public class GeneratorDisplay {
 
 	public static void main(String[] args) throws Exception {
 		try {
+			long cost = System.currentTimeMillis();
 			GeneratorDisplay generatorSqlmap = new GeneratorDisplay();
 			generatorSqlmap.generator();
 
 			File f = new File("generatorConfig.xml");
 			System.out.println(f.exists());
 
-			System.out.println("########## over");
+			log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
