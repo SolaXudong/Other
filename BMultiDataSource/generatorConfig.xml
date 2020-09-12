@@ -1,40 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
-        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
-        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+	PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+	"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
 	<context id="MysqlContext" targetRuntime="MyBatis3Simple"
 		defaultModelType="flat">
+
 		<property name="beginningDelimiter" value="`" />
 		<property name="endingDelimiter" value="`" />
-
 		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
 			<property name="mappers"
 				value="com.xu.tt.util.mybatis.MyMapper" />
 		</plugin>
-
-		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/test?serverTimezone=UTC"
-			userId="root" password="shijie">
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://116.62.130.98:3306/game" userId="root"
+			password="Sheng2020#$M">
 		</jdbcConnection>
 
 		<!-- 对于生成的pojo所在包 -->
 		<javaModelGenerator targetPackage="com.xu.tt.dto"
 			targetProject="src/main/java" />
-
 		<!-- 对于生成的mapper所在目录 -->
 		<sqlMapGenerator targetPackage="mapper"
 			targetProject="src/main/resources" />
-
 		<!-- 配置mapper对应的java映射 -->
 		<javaClientGenerator targetPackage="com.xu.tt.dao"
 			targetProject="src/main/java" type="XMLMAPPER" />
 
 		<!-- 要生成的表名（加了主键自增） -->
-		<table tableName="user_copy">
+		<!-- <table tableName="g_user"> -->
+		<!-- <generatedKey column="id" sqlStatement="MySql" identity="true" /> -->
+		<!-- </table> -->
+		<table tableName="g_order_flow">
 			<generatedKey column="id" sqlStatement="MySql"
 				identity="true" />
 		</table>
+
 	</context>
 </generatorConfiguration>
