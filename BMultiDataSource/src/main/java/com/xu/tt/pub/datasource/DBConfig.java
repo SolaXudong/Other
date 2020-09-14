@@ -11,10 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Configuration
-@EnableTransactionManagement // 开启事务
+//@EnableTransactionManagement // 开启事务
 //@AutoConfigureAfter(MainConfig.class)
 public class DBConfig {
 
@@ -74,12 +71,12 @@ public class DBConfig {
 		}
 	}
 
-	@Bean
-	@DependsOn({ "dynamicDataSource" })
-	public PlatformTransactionManager transactionManager(DataSource dynamicDataSource) throws Exception {
-		DataSourceTransactionManager txManager = new DataSourceTransactionManager();
-		txManager.setDataSource(dynamicDataSource);
-		return txManager;
-	}
+//	@Bean
+//	@DependsOn({ "dynamicDataSource" })
+//	public PlatformTransactionManager transactionManager(DataSource dynamicDataSource) throws Exception {
+//		DataSourceTransactionManager txManager = new DataSourceTransactionManager();
+//		txManager.setDataSource(dynamicDataSource);
+//		return txManager;
+//	}
 
 }

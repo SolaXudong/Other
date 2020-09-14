@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.collections4.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.xu.tt.dao.UserMapper;
 import com.xu.tt.dto.User;
@@ -32,6 +33,17 @@ public class UserService {
 	public List<User> getUserList2() throws Exception {
 		List<User> list = ListUtils.emptyIfNull(userMapper.selectAll());
 		return list;
+	}
+
+	@Transactional
+	@RoutingDB(DBContextHolder.DBType.SLAVE)
+	public void transaction() throws Exception {
+		int rs = userMapper.updateByPrimaryKeySelective(User.builder().id(2).age(1).build());
+		System.out.println(rs);
+		if (1 / 0 > 0) {
+		}
+		rs = userMapper.updateByPrimaryKeySelective(User.builder().id(2).age(2).build());
+		System.out.println(rs);
 	}
 
 }

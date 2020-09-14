@@ -46,4 +46,10 @@ class ApplicationTests {
 		log.info("########## c3: {}", c3.getMetaData().getURL());
 	}
 
+	@Test
+	public void testTransaction() throws Exception {
+		log.info("########## 【test transaction】");
+		userService.transaction();
+	}
+
 }
