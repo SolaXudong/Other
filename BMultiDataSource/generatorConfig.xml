@@ -32,6 +32,9 @@
 		<!-- <table tableName="g_user"> -->
 		<!-- <generatedKey column="id" sqlStatement="MySql" identity="true" /> -->
 		<!-- </table> -->
+		<!-- <table tableName="g_card_user_rel"> -->
+		<!-- <generatedKey column="id" sqlStatement="MySql" identity="true" /> -->
+		<!-- </table> -->
 
 	</context>
 </generatorConfiguration>
