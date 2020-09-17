@@ -12,6 +12,9 @@ import com.xu.tt.dto.User;
 import com.xu.tt.pub.datasource.DBContextHolder;
 import com.xu.tt.pub.datasource.RoutingDB;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserService {
 
@@ -39,11 +42,22 @@ public class UserService {
 	@RoutingDB(DBContextHolder.DBType.SLAVE)
 	public void transaction() throws Exception {
 		int rs = userMapper.updateByPrimaryKeySelective(User.builder().id(2).age(1).build());
-		System.out.println(rs);
-		if (1 / 0 > 0) {
-		}
-		rs = userMapper.updateByPrimaryKeySelective(User.builder().id(2).age(2).build());
-		System.out.println(rs);
+		log.info("########## update-{}", rs);
+//		int a = 1 / 0;
+	}
+
+	@Transactional
+	@RoutingDB(DBContextHolder.DBType.MASTER)
+	public void transactionMultiP1() throws Exception {
+		int rs = userMapper.updateByPrimaryKeySelective(User.builder().id(2).age(1).build());
+		log.info("########## update 1: {}", rs);
+	}
+
+	@Transactional
+	@RoutingDB(DBContextHolder.DBType.SLAVE)
+	public void transactionMultiP2() throws Exception {
+		int rs = userMapper.updateByPrimaryKeySelective(User.builder().id(2).age(2).build());
+		log.info("########## update 2: {}", rs);
 	}
 
 }

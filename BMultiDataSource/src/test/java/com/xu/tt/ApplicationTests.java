@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.alibaba.fastjson.JSONObject;
+import com.xu.tt.service.B_UserService;
 import com.xu.tt.service.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,8 @@ class ApplicationTests {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private B_UserService b_userService;
 	@Resource(name = "masterDataSource")
 	private DataSource masterDataSource;
 	@Resource(name = "slaveDataSource")
@@ -67,6 +70,7 @@ class ApplicationTests {
 	public void testTransaction() throws Exception {
 		log.info("########## 【test transaction】");
 		userService.transaction();
+//		b_userService.transactionMulti();
 	}
 
 }

@@ -71,6 +71,22 @@ public class DBConfig {
 		}
 	}
 
+//	@Bean(name = "dynamicSqlSessionFactory")
+//	@DependsOn({ "dynamicDataSource" })
+//	public SqlSessionFactory testSqlSessionFactory(@Qualifier("dynamicDataSource") DataSource dataSource)
+//			throws Exception {
+//		SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+//		bean.setDataSource(dataSource);
+//		return bean.getObject();
+//	}
+
+//	@Bean(name = "dynamicSqlSessionTemplate")
+//	@DependsOn({ "dynamicDataSource" })
+//	public SqlSessionTemplate testSqlSessionTemplate(
+//			@Qualifier("dynamicSqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+//		return new SqlSessionTemplate(sqlSessionFactory);
+//	}
+
 //	@Bean
 //	@DependsOn({ "dynamicDataSource" })
 //	public PlatformTransactionManager transactionManager(DataSource dynamicDataSource) throws Exception {
