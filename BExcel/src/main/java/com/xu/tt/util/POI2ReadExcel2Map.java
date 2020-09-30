@@ -21,6 +21,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  * @author XuDong 2020-09-30 09:05:57
+ * @tips 参考：http://www.asfx.xyz/p/32f4673947bb4e96a010527c8ad3cac7
  */
 @SuppressWarnings("deprecation")
 public class POI2ReadExcel2Map {
