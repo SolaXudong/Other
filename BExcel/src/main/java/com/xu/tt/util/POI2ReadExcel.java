@@ -44,7 +44,7 @@ public class POI2ReadExcel {
 		// 读
 		String path = org.springframework.util.StringUtils
 				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/");
-		String fileName = "1.xlsx"; // NSD_CURRICULUM_DESIGN/1
+		String fileName = "1.xlsx";
 		readExcel(path, fileName);
 		// 写
 //		List<XSTU> list = com.google.common.collect.Lists.newArrayList();
