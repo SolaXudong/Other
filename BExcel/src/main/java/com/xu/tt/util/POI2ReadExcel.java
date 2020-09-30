@@ -29,8 +29,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.google.common.collect.Lists;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -38,22 +36,22 @@ import lombok.extern.slf4j.Slf4j;
  * @tips 参考：https://www.cnblogs.com/linjiqin/p/10975761.html
  */
 @Slf4j
-public class ExcelUtil {
+public class POI2ReadExcel {
 
 	public static void main(String[] args) throws Exception {
 		long cost = System.currentTimeMillis();
 
 		// 读
-//		String path = org.springframework.util.StringUtils
-//				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/");
-//		String fileName = "1.xlsx"; // NSD_CURRICULUM_DESIGN/1
-//		readExcel(path, fileName);
+		String path = org.springframework.util.StringUtils
+				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/");
+		String fileName = "1.xlsx"; // NSD_CURRICULUM_DESIGN/1
+		readExcel(path, fileName);
 		// 写
-		List<XSTU> list = Lists.newArrayList();
-		for (int i = 1; i <= 10; i++)
-			list.add(XSTU.builder().centerName("中心" + i).trueName("徐东" + i).loginName("sola" + i + "@tedu.cn")
-					.openTime(new Date()).build());
-		writeExcel(list, XSTU.class);
+//		List<XSTU> list = com.google.common.collect.Lists.newArrayList();
+//		for (int i = 1; i <= 10; i++)
+//			list.add(XSTU.builder().centerName("中心" + i).trueName("徐东" + i).loginName("sola" + i + "@tedu.cn")
+//					.openTime(new Date()).build());
+//		writeExcel(list, XSTU.class);
 
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}
