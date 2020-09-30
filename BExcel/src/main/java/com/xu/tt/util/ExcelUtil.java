@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -31,6 +29,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.google.common.collect.Lists;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -41,15 +41,29 @@ import lombok.extern.slf4j.Slf4j;
 public class ExcelUtil {
 
 	public static void main(String[] args) throws Exception {
-		String path = org.springframework.util.StringUtils
-				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/");
-		String fileName = "1.xlsx";
-		readExcel(path, fileName);
+		long cost = System.currentTimeMillis();
+
+		// 读
+//		String path = org.springframework.util.StringUtils
+//				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/");
+//		String fileName = "1.xlsx"; // NSD_CURRICULUM_DESIGN/1
+//		readExcel(path, fileName);
+		// 写
+		List<XSTU> list = Lists.newArrayList();
+		for (int i = 1; i <= 10; i++)
+			list.add(XSTU.builder().centerName("中心" + i).trueName("徐东" + i).loginName("sola" + i + "@tedu.cn")
+					.openTime(new Date()).build());
+		writeExcel(list, XSTU.class);
+
+		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}
 
 //	private final static String EXCEL2003 = "xls";
 //	private final static String EXCEL2007 = "xlsx";
 
+	/**
+	 * @tips LOOK 读表格
+	 */
 	public static <T> List<T> readExcel(String path, String fileName) throws Exception {
 		FileInputStream is = new FileInputStream(new File(path + fileName));
 //		String fileName = file.getOriginalFilename();
@@ -65,22 +79,40 @@ public class ExcelUtil {
 			if (fileName.endsWith("xls"))
 				workbook = new HSSFWorkbook(is);
 			if (workbook != null) {
-				// 默认读取第一个sheet
-				Sheet sheet = workbook.getSheetAt(0);
-				for (int i = sheet.getFirstRowNum(); i <= sheet.getLastRowNum(); i++) {
-					log.info("########## row: {}", i);
-					Row row = sheet.getRow(i);
-					// 忽略空白行
-					if (row == null)
+				// 读Sheet
+				log.info("########## 【总簿数：{}】", workbook.getNumberOfSheets());
+				for (int s = 0; s < workbook.getNumberOfSheets(); s++) {
+//					if (s != 3)
+//						continue;
+					Sheet sheet = workbook.getSheetAt(s);
+					if (null == sheet.getRow(sheet.getLastRowNum()))
 						continue;
-					// 首行 提取注解
-					for (int j = row.getFirstCellNum(); j <= row.getLastCellNum(); j++) {
-						Cell cell = row.getCell(j);
-						String cellValue = getCellValue(cell);
-						if (StringUtils.isNotEmpty(cellValue))
-							log.info("########## col: {}, {}", j, cellValue);
+					log.info("########## 【当前簿数：{}，总行数：{}，总列数：{}】", s, sheet.getLastRowNum() + 1,
+							sheet.getRow(sheet.getLastRowNum()).getLastCellNum());
+					// 读Row
+					for (int i = sheet.getFirstRowNum(); i <= sheet.getLastRowNum(); i++) {
+//						if (i != 0)
+//							continue;
+						log.info("########## 第【{}】行", i);
+						Row row = sheet.getRow(i);
+						// 忽略空白行
+						if (row == null)
+							continue;
+						// 首行 提取注解
+						// 读Cell
+						for (int j = row.getFirstCellNum(); j <= row.getLastCellNum(); j++) {
+//							if (j != 0)
+//								continue;
+							Cell cell = row.getCell(j);
+							String cellValue = getCellValue(cell);
+							if (StringUtils.isNotEmpty(cellValue))
+								log.info("########## 第{}行，第{}列，值：【{}】", i, j, cellValue);
+						}
+						// 读Cell over
 					}
+					// 读Row over
 				}
+				// 读Sheet over
 			}
 		} catch (Exception e) {
 			log.error(String.format("parse excel exception!"), e);
@@ -121,8 +153,13 @@ public class ExcelUtil {
 		}
 	}
 
-	public static <T> void writeExcel(HttpServletResponse response, List<T> dataList, Class<T> cls) {
+	/**
+	 * @tips LOOK 写表格
+	 */
+	public static <T> void writeExcel(List<T> dataList, Class<T> cls) {
 		Field[] fields = cls.getDeclaredFields();
+		for (Field f : fields)
+			f.setAccessible(true);
 		List<Field> fieldList = Arrays.stream(fields).sorted(Comparator.comparing(field -> {
 			int col = 0;
 			return col;
@@ -174,7 +211,7 @@ public class ExcelUtil {
 		// 冻结窗格
 		wb.getSheet("Sheet1").createFreezePane(0, 1, 0, 1);
 		// 生成excel文件
-		buildExcelFile(".\\default.xlsx", wb);
+		buildExcelFile("D:/tt/default.xlsx", wb);
 	}
 
 	/**
