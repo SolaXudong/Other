@@ -55,10 +55,10 @@
 			<version>1.8.9</version>
 		</dependency>
 		<!-- 【JTA】 -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-jta-atomikos</artifactId> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework.boot</groupId> -->
+		<!-- <artifactId>spring-boot-starter-jta-atomikos</artifactId> -->
+		<!-- </dependency> -->
 		<!-- 【jdbc】(JdbcTemplate) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -132,6 +132,17 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>22.0</version>
+		</dependency>
+		<!-- 【Excel】 -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.1.2</version>
 		</dependency>
 
 		<!-- devtools 热部署 -->

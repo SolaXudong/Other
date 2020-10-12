@@ -30,7 +30,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.xu.tt.util.dto.TExcel;
+import com.xu.tt.dto.TExcel;
 
 import lombok.extern.slf4j.Slf4j;
 

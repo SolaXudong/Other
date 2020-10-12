@@ -29,7 +29,7 @@ public class POI2ReadExcel2Map {
 	public static void main(String[] args) {
 		String path = org.springframework.util.StringUtils
 				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/");
-		String fileName = "student学员.xlsx";
+		String fileName = "1000.xlsx";
 		File file = new File(path + fileName);
 		if (file.exists()) {
 			List<Map<Integer, Object>> list = readData(file);

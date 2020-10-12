@@ -14,8 +14,8 @@
 				value="com.xu.tt.util.mybatis.MyMapper" />
 		</plugin>
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://116.62.130.98:3306/game" userId="root"
-			password="Sheng2020#$M">
+			connectionURL="jdbc:mysql://47.110.135.139:8306/debt_test"
+			userId="dongan_test" password="8dP9x123aV">
 		</jdbcConnection>
 
 		<!-- 对于生成的pojo所在包 -->
@@ -35,6 +35,10 @@
 		<!-- <table tableName="g_card_user_rel"> -->
 		<!-- <generatedKey column="id" sqlStatement="MySql" identity="true" /> -->
 		<!-- </table> -->
+		<table tableName="c_case">
+			<generatedKey column="id" sqlStatement="MySql"
+				identity="true" />
+		</table>
 
 	</context>
 </generatorConfiguration>
