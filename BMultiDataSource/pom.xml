@@ -6,7 +6,7 @@
 	<groupId>com.xu.tt</groupId>
 	<artifactId>BMultiDataSource</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>BMultiDataSource</name>
 	<description>Demo project for Spring Boot</description>
@@ -32,6 +32,19 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- 依赖中移除TOMCAT模块 -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- 【javax】 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<!-- 【test】 -->
 		<dependency>
@@ -162,6 +175,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<outputDirectory>D:\java\tt\apache-tomcat-8.5.57\webapps</outputDirectory>
+				</configuration>
 			</plugin>
 			<!-- 防止打包时Test报错 -->
 			<plugin>
