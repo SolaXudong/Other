@@ -21,6 +21,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.google.common.collect.Lists;
+import com.xu.tt.util.dto.XSTU;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -132,19 +133,18 @@ public class POI2Write4XLSX {
 
 	public static void main(String[] args) throws Exception {
 		long cost = System.currentTimeMillis();
-
 		// 准备数据源
 		List<XSTU> list = Lists.newArrayList();
-		for (int i = 1; i <= 10; i++)
+		for (int i = 1; i <= 1_00; i++)
 			list.add(XSTU.builder().centerName("中心" + i).trueName("徐东" + i).loginName("sola" + i + "@tedu.cn")
-					.openTime(new Date()).build());
+					.openTime(new Date()).proper("proper_" + i).isHomeCenter("isHomeCenter_" + i)
+					.version("version_" + i).parts("parts_" + i).openStaff("openStaff_" + i).build());
 		String[] tips = { "学员姓名", "申请中心", "视频学习权限", "帐号", "版本", "开通阶段", "开通人员", "是否原脱产班学员", "是否原其他方向VIP学员",
 				"投诉(时间/投诉内容)", "备注", "开通日期" };
 		String[] params = { "trueName", "centerName", "isHomeCenter", "loginName", "version", "parts", "openStaff",
 				"proper", "proper", "proper", "proper", "openTime" };
 		// 测试
-		apachePOI(null, "student学员", "VIP学员信息表", tips, params, list);
-
+//		apachePOI(null, "student学员", "VIP学员信息表", tips, params, list);
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}
 

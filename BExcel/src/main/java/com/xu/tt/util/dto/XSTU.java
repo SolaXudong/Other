@@ -1,4 +1,4 @@
-package com.xu.tt.util;
+package com.xu.tt.util.dto;
 
 import java.util.Date;
 
