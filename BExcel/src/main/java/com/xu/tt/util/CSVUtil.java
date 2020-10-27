@@ -22,6 +22,10 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author XuDong 2020-10-28 00:19:44
+ * @tips LOOK 代码参考：https://www.cnblogs.com/cjsblog/p/9260421.html
  */
 @Slf4j
 public class CSVUtil {
@@ -171,6 +176,43 @@ public class CSVUtil {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	/**
+	 * @tips LOOK 测试写100万数据需要花费多长时间
+	 */
+	@Test
+	public void testMillion() throws Exception {
+		int times = 10 * 10;
+		Object[] cells = { "满100减15元", "100011", 15 };
+		// 导出为CSV文件
+		long t1 = System.currentTimeMillis();
+		FileWriter writer = new FileWriter("D:/tt/1.csv");
+		CSVPrinter printer = CSVFormat.EXCEL.withHeader("a", "b", "c").print(writer);
+		for (int i = 0; i < times; i++)
+			printer.printRecord(cells);
+		printer.flush();
+		printer.close();
+		long t2 = System.currentTimeMillis();
+		System.out.println("CSV: " + (t2 - t1));
+		// 导出为Excel文件
+		long t3 = System.currentTimeMillis();
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFSheet sheet = workbook.createSheet();
+		for (int i = 0; i < times; i++) {
+			XSSFRow row = sheet.createRow(i);
+			for (int j = 0; j < cells.length; j++) {
+				XSSFCell cell = row.createCell(j);
+				cell.setCellValue(String.valueOf(cells[j]));
+			}
+		}
+		FileOutputStream fos = new FileOutputStream("D:/tt/2.xlsx");
+		workbook.write(fos);
+		workbook.close();
+		fos.flush();
+		fos.close();
+		long t4 = System.currentTimeMillis();
+		System.out.println("Excel: " + (t4 - t3));
 	}
 
 }

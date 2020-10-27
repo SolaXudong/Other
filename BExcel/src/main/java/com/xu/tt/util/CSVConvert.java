@@ -87,7 +87,6 @@ public class CSVConvert {
 		}
 
 		public void startElement(String uri, String localName, String name, Attributes attributes) throws SAXException {
-			log.info("{}, {}, {}, {}", uri, localName, name, attributes);
 			if ("inlineStr".equals(name) || "v".equals(name)) {
 				vIsOpen = true;
 				// Clear contents cache
@@ -161,7 +160,7 @@ public class CSVConvert {
 					String sstIndex = value.toString();
 					try {
 						int idx = Integer.parseInt(sstIndex);
-						XSSFRichTextString rtss = new XSSFRichTextString(sharedStringsTable.getEntryAt(idx));
+						XSSFRichTextString rtss = new XSSFRichTextString(sharedStringsTable.getItemAt(idx).getString());
 						thisStr = rtss.toString();
 					} catch (NumberFormatException ex) {
 						output.println("Failed to parse SST index '" + sstIndex + "': " + ex.toString());
@@ -303,7 +302,8 @@ public class CSVConvert {
 	public static void main(String[] args) throws Exception {
 		long cost = System.currentTimeMillis();
 
-		List<String[]> list = CSVConvert.readerExcel("D:/tt/batch/案件模板-测试导入Sep-27.xlsx", "案件导入模板", 45);
+//		List<String[]> list = CSVConvert.readerExcel("D:/tt/batch/案件模板-测试导入Sep-27.xlsx", "案件导入模板", 45);
+		List<String[]> list = CSVConvert.readerExcel("D:/tt/student学员.xlsx", "VIP学员信息表", 12);
 //		for (String[] record : list) {
 //			for (String cell : record)
 //				System.out.print(cell + "\t");
