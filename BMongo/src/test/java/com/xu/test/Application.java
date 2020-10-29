@@ -44,17 +44,17 @@ public class Application {
 //		System.out.println(userService.delete(dpu));
 		log.info("########## 查询单个");
 		Query spu = new Query(Criteria.where("id").is(10030L));
-		System.out.println(userService.find(spu));
+//		System.out.println(userService.find(spu));
 		log.info("########## 查询多个");
 		Query lpu = new Query(Criteria.where("id").gte(10095L));
-		userService.findList(lpu).stream().forEach(System.out::println);
+//		userService.findList(lpu).stream().forEach(System.out::println);
 		log.info("########## 数量");
 		Query cpu = new Query(Criteria.where("id").gte(10095L));
-		System.out.println(userService.count(cpu));
+//		System.out.println(userService.count(cpu));
 		log.info("########## 分页");
 		Query ppu = new Query(Criteria.where("id").gte(10090L));
-		userService.page(ppu, 1, 2).stream().forEach(System.out::println);
-		userService.page(ppu, 3, 2).stream().forEach(System.out::println);
+//		userService.page(ppu, 1, 2).stream().forEach(System.out::println);
+//		userService.page(ppu, 3, 2).stream().forEach(System.out::println);
 		/***/
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}

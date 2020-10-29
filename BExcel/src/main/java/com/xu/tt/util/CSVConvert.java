@@ -29,6 +29,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -43,8 +46,10 @@ public class CSVConvert {
 	private int minColumns;
 	private PrintStream output;
 	private String sheetName;
+	private int isNotNullIndex;
 
-	public CSVConvert(OPCPackage pkg, PrintStream output, String sheetName, int minColumns) {
+	public CSVConvert(OPCPackage pkg, PrintStream output, String sheetName, int minColumns, int isNotNullIndex) {
+		this.isNotNullIndex = isNotNullIndex;
 		this.xlsxPackage = pkg;
 		this.output = output;
 		this.minColumns = minColumns;
@@ -73,8 +78,9 @@ public class CSVConvert {
 		private List<String[]> rows = new ArrayList<String[]>();
 		private boolean isCellNull = false;
 
-		public MyXSSFSheetHandler(StylesTable styles, ReadOnlySharedStringsTable strings, int cols,
-				PrintStream target) {
+		public MyXSSFSheetHandler(StylesTable styles, ReadOnlySharedStringsTable strings, int cols, PrintStream target,
+				int isNotNullIndex) {
+			this.isNotNullIndex = isNotNullIndex;
 			this.stylesTable = styles;
 			this.sharedStringsTable = strings;
 			this.minColumnCount = cols;
@@ -188,8 +194,10 @@ public class CSVConvert {
 				if (lastColumnNumber == -1)
 					lastColumnNumber = 0;
 				// 判断单元格的值是否为空
-				if (thisStr == null || "".equals(isCellNull))
+				if (thisStr == null || isCellNull)
+//				if (thisStr == null || "".equals(isCellNull))
 					isCellNull = true; // 设置单元格是否为空值
+//				log.info("{}-{}-{}", thisColumn, minColumnCount, thisStr);
 				record[thisColumn] = thisStr; // 添加
 				// Update column
 				if (thisColumn > -1)
@@ -242,12 +250,14 @@ public class CSVConvert {
 	}
 
 	public List<String[]> processSheet(StylesTable styles, ReadOnlySharedStringsTable strings,
-			InputStream sheetInputStream) throws IOException, ParserConfigurationException, SAXException {
+			InputStream sheetInputStream, int isNotNullIndex)
+			throws IOException, ParserConfigurationException, SAXException {
 		InputSource sheetSource = new InputSource(sheetInputStream);
 		SAXParserFactory saxFactory = SAXParserFactory.newInstance();
 		SAXParser saxParser = saxFactory.newSAXParser();
 		XMLReader sheetParser = saxParser.getXMLReader();
-		MyXSSFSheetHandler handler = new MyXSSFSheetHandler(styles, strings, this.minColumns, this.output); // 内部类
+		MyXSSFSheetHandler handler = new MyXSSFSheetHandler(styles, strings, this.minColumns, this.output,
+				isNotNullIndex); // 内部类
 		sheetParser.setContentHandler(handler);
 		sheetParser.parse(sheetSource);
 		return handler.getRows();
@@ -260,7 +270,8 @@ public class CSVConvert {
 	 * @throws ParserConfigurationException
 	 * @throws SAXException
 	 */
-	public List<String[]> process() throws IOException, OpenXML4JException, ParserConfigurationException, SAXException {
+	public List<String[]> process(int isNotNullIndex)
+			throws IOException, OpenXML4JException, ParserConfigurationException, SAXException {
 		ReadOnlySharedStringsTable strings = new ReadOnlySharedStringsTable(this.xlsxPackage);
 		XSSFReader xssfReader = new XSSFReader(this.xlsxPackage);
 		List<String[]> list = null;
@@ -270,7 +281,7 @@ public class CSVConvert {
 			InputStream stream = iter.next();
 			String sheetNameTemp = iter.getSheetName();
 			if (this.sheetName.equals(sheetNameTemp)) {
-				list = processSheet(styles, strings, stream);
+				list = processSheet(styles, strings, stream, isNotNullIndex);
 				stream.close();
 			}
 		}
@@ -290,11 +301,11 @@ public class CSVConvert {
 	 * @throws OpenXML4JException
 	 * @throws IOException
 	 */
-	public static List<String[]> readerExcel(String path, String sheetName, int minColumns)
+	public static List<String[]> readerExcel(String path, String sheetName, int minColumns, int isNotNullIndex)
 			throws IOException, OpenXML4JException, ParserConfigurationException, SAXException {
 		OPCPackage pkg = OPCPackage.open(path, PackageAccess.READ);
-		CSVConvert xlsx2csv = new CSVConvert(pkg, System.out, sheetName, minColumns);
-		List<String[]> list = xlsx2csv.process();
+		CSVConvert xlsx2csv = new CSVConvert(pkg, System.out, sheetName, minColumns, isNotNullIndex);
+		List<String[]> list = xlsx2csv.process(isNotNullIndex);
 		pkg.close();
 		return list;
 	}
@@ -302,16 +313,31 @@ public class CSVConvert {
 	public static void main(String[] args) throws Exception {
 		long cost = System.currentTimeMillis();
 
-//		List<String[]> list = CSVConvert.readerExcel("D:/tt/batch/案件模板-测试导入Sep-27.xlsx", "案件导入模板", 45);
-		List<String[]> list = CSVConvert.readerExcel("D:/tt/student学员.xlsx", "VIP学员信息表", 12);
+//		List<String[]> list = CSVConvert.readerExcel("D:/tt/student学员.xlsx", "VIP学员信息表", 12);
 //		for (String[] record : list) {
 //			for (String cell : record)
 //				System.out.print(cell + "\t");
 //			System.out.println();
 //		}
-		System.out.println(list.size());
+//		System.out.println(list.size());
 
-		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+		ArrayList<JSONObject> rs = Lists.newArrayList();
+		// 测试案件导入模板-Oct-26.xlsx/233.xlsx
+		List<String[]> list = CSVConvert.readerExcel("D:/tt/测试案件导入模板-Oct-26.xlsx", "案件导入模板", 300, 1);
+		for (int i = 0; i < list.size(); i++) {
+			if (i == 0)
+				continue;
+//			System.out.println(i + "\t" + String.join(",", list.get(i)));
+			JSONObject obj = new JSONObject(true);
+			for (int j = 0; j < list.get(i).length; j++) {
+				obj.put("proper_" + j, list.get(i)[j]);
+			}
+//			log.info("##### obj-{}", obj);
+			rs.add(obj);
+		}
+		System.out.println(rs.size());
+
+		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s"); // 32s-10W
 	}
 
 }
