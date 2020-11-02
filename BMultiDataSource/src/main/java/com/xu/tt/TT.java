@@ -24,12 +24,13 @@ public class TT {
 				//
 				.driverClassName("com.mysql.cj.jdbc.Driver").username("root").password("shijie")
 				//
-				.url("jdbc:mysql://localhost:3306/test?serverTimezone=UTC")
+				.url("jdbc:mysql://localhost:3306/debt_test_new?serverTimezone=UTC")
 				//
 				.type(com.zaxxer.hikari.HikariDataSource.class).build();
 		System.out.println(ds.getConnection());
 		JdbcTemplate jt1 = new JdbcTemplate(ds);
-		List<Map<String, Object>> l1 = ListUtils.emptyIfNull(jt1.queryForList("select id, name from user"));
+		List<Map<String, Object>> l1 = ListUtils
+				.emptyIfNull(jt1.queryForList("select user_nm from g_user where user_id = 1"));
 		log.info("########## l1: count-{}, data-{}", l1.size(), l1);
 	}
 
