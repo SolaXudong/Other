@@ -15,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @author XuDong 2020-11-18 21:41:22
+ * @tips 文档参考：https://doc.xiaominfo.com/
  */
 @Configuration
 @EnableSwagger2
