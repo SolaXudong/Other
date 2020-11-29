@@ -2,6 +2,7 @@ package com.xu.tt.entity;
 
 import java.time.LocalDateTime;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
@@ -103,5 +104,10 @@ public class GUser {
 	private String whiteIp;
 
 	private Integer passwordStrength;
+
+	@Override
+	public String toString() {
+		return JSONObject.toJSONString(this);
+	}
 
 }

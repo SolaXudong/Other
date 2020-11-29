@@ -14,7 +14,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
 import com.xu.tt.entity.GUser;
 import com.xu.tt.mapper.GUserMapper;
-import com.xu.tt.service.IGUserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,19 +27,17 @@ public class ApplicationTests {
 
 	@Autowired
 	private GUserMapper userMapper;
-	@Autowired
-	private IGUserService userService;
 
 	@Test
 	public void testSelectOne() {
 		log.info("##### select one");
-		GUser u1 = userService.getById("763");
+		GUser u1 = userMapper.selectById("763");
 		log.info("##### {}", u1);
-		GUser u2 = userService.getById(763);
+		GUser u2 = userMapper.selectById(763);
 		log.info("##### {}", u2);
 		QueryWrapper<GUser> sparamU = new QueryWrapper<>();
 		sparamU.eq("user_nm", "sola1");
-		GUser u3 = userService.getOne(sparamU);
+		GUser u3 = userMapper.selectOne(sparamU);
 		log.info("##### {}", u3);
 	}
 
@@ -54,7 +51,7 @@ public class ApplicationTests {
 		sparamU.and(t -> t.eq("group_id", 2).likeRight("user_nm", "sola").or().eq("user_nm", "sola4"));
 		sparamU.or(t -> t.eq("user_nm", "sola1"));
 //		sparamU.and(t -> t.eq("user_nm", "xxx"));
-		List<GUser> list1 = userService.list(sparamU);
+		List<GUser> list1 = userMapper.selectList(sparamU);
 		log.info("##### {}", list1.stream().map(t -> t.getUserNm()).collect(Collectors.toList()));
 	}
 
@@ -64,16 +61,18 @@ public class ApplicationTests {
 		QueryWrapper<GUser> sparamU = new QueryWrapper<>();
 		sparamU.eq("group_id", 2);
 		PageHelper.startPage(2, 5, "user_nm");
-		List<GUser> list1 = userService.list(sparamU);
+		List<GUser> list1 = userMapper.selectList(sparamU);
 		log.info("##### {}", list1.stream().map(t -> t.getUserNm()).collect(Collectors.toList()));
+		Integer count = userMapper.selectCount(sparamU);
+		log.info("##### {}", count);
 	}
 
 	@Test
 	public void testInsert() {
 		log.info("##### select insert");
 		GUser dto = GUser.builder().password("东").build();
-		boolean b1 = userService.save(dto);
-		log.info("##### {}", b1);
+		int rs = userMapper.insert(dto);
+		log.info("##### {}", rs);
 	}
 
 	@Test
@@ -81,8 +80,8 @@ public class ApplicationTests {
 		log.info("##### select update");
 		UpdateWrapper<GUser> uparamU = new UpdateWrapper<>();
 		uparamU.set("password", null).set("user_nm", "user_nm001").eq("id", "762");
-		boolean b1 = userService.update(uparamU);
-		log.info("##### {}", b1);
+		int rs = userMapper.update(null, uparamU);
+		log.info("##### {}", rs);
 	}
 
 	@Test
@@ -90,7 +89,7 @@ public class ApplicationTests {
 		log.info("##### select delete");
 		UpdateWrapper<GUser> dparamU = new UpdateWrapper<>();
 		dparamU.eq("password", "东");
-		userService.remove(dparamU);
+		userMapper.delete(dparamU);
 	}
 
 }
