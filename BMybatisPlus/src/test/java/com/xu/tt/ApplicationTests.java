@@ -80,7 +80,7 @@ public class ApplicationTests {
 	public void testUpdate() {
 		log.info("##### select update");
 		UpdateWrapper<GUser> uparamU = new UpdateWrapper<>();
-		uparamU.set("password", null).set("user_nm", "user_nm001").eq("id", "774");
+		uparamU.set("password", null).set("user_nm", "user_nm001").eq("id", "762");
 		boolean b1 = userService.update(uparamU);
 		log.info("##### {}", b1);
 	}
