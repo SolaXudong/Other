@@ -1,6 +1,7 @@
 package com.xu.tt;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
@@ -90,6 +91,15 @@ public class ApplicationTests {
 		UpdateWrapper<GUser> dparamU = new UpdateWrapper<>();
 		dparamU.eq("password", "东");
 		userMapper.delete(dparamU);
+	}
+
+	@Test
+	public void testCustomSQL() {
+		log.info("##### select custom sql");
+		List<Map<String, Object>> list1 = userMapper.selectUser1();
+		log.info("##### {}", list1.stream().map(t -> t.get("user_nm")).collect(Collectors.toList()));
+//		List<GUser> list2 = userMapper.selectUser2();
+//		log.info("##### {}", list2.stream().map(t -> t.getUserNm()).collect(Collectors.toList()));
 	}
 
 }

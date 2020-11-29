@@ -26,7 +26,7 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 @SuppressWarnings({ "unused" })
 public class CodeGenerator {
 
-	private static String tables = "g_user";
+	private static String tables = "u_staff";
 	private static String packageName = "com.xu.tt";
 	private static String url = "localhost:3306/test";
 	private static String userName = "root";
