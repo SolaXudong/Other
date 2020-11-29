@@ -64,6 +64,12 @@
 			<artifactId>HikariCP</artifactId>
 			<version>3.4.1</version>
 		</dependency>
+		<!-- 【pagehelper】(mybatis-spring-boot-starter不要使用1.0.0版本，因为还不支持拦截器插件) -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>1.2.12</version>
+		</dependency>
 		<!-- 【lombok】 -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
