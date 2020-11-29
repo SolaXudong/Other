@@ -1,21 +1,29 @@
-package com.xu.tt.entity;
+package com.xu.tt.dto;
 
 import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @tips 用户信息表
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "g_user")
 public class GUser {
 
-	@TableId(value = "id", type = IdType.AUTO)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	/**

@@ -1,28 +1,26 @@
 package com.xu.tt;
 
 import java.sql.Connection;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.xu.tt.dao.GUserMapper;
 import com.xu.tt.dto.CCase;
+import com.xu.tt.dto.GUser;
 import com.xu.tt.dto.TExcel;
 import com.xu.tt.service.B_UserService;
 import com.xu.tt.service.CCaseService;
@@ -49,6 +47,8 @@ class ApplicationTests {
 
 	@Autowired
 	private CCaseService caseService;
+	@Autowired
+	GUserMapper userMapper;
 
 	/**
 	 * @tips LOOK 测Service
@@ -81,15 +81,20 @@ class ApplicationTests {
 	@Test
 	public void testQuerySQL() throws Exception {
 		log.info("########## 【test QuerySQL】");
-		JdbcTemplate jt1 = new JdbcTemplate(masterDataSource);
-		JdbcTemplate jt2 = new JdbcTemplate(slaveDataSource);
-		List<Map<String, Object>> l1 = ListUtils.emptyIfNull(jt1.queryForList("select id, name from user"));
-		log.info("########## l1: count-{}, data-{}", l1.size(), l1);
-		jt1.execute("update user set name = \"" + LocalDateTime.now() + "\" where id = 2");
-		l1 = ListUtils.emptyIfNull(jt1.queryForList("select id, name from user"));
-		log.info("########## l1: count-{}, data-{}", l1.size(), l1);
-		List<Map<String, Object>> l2 = ListUtils.emptyIfNull(jt2.queryForList("select id, name from user"));
-		log.info("########## l2: count-{}, data-{}", l2.size(), l2);
+//		JdbcTemplate jt1 = new JdbcTemplate(masterDataSource);
+//		JdbcTemplate jt2 = new JdbcTemplate(slaveDataSource);
+//		List<Map<String, Object>> l1 = ListUtils.emptyIfNull(jt1.queryForList("select id, name from user"));
+//		log.info("########## l1: count-{}, data-{}", l1.size(), l1);
+//		jt1.execute("update user set name = \"" + LocalDateTime.now() + "\" where id = 2");
+//		l1 = ListUtils.emptyIfNull(jt1.queryForList("select id, name from user"));
+//		log.info("########## l1: count-{}, data-{}", l1.size(), l1);
+//		List<Map<String, Object>> l2 = ListUtils.emptyIfNull(jt2.queryForList("select id, name from user"));
+//		log.info("########## l2: count-{}, data-{}", l2.size(), l2);
+		GUser dto = GUser.builder().userNm("abc").build();
+		Example ex = new Example(GUser.class);
+		ex.createCriteria().andEqualTo("id", 762);
+		int rs = userMapper.updateByExample(dto, ex);
+		log.info("########## {}", rs);
 	}
 
 	/**
