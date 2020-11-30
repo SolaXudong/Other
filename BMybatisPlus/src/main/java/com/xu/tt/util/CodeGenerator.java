@@ -27,11 +27,11 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 @SuppressWarnings({ "unused" })
 public class CodeGenerator {
 
-	private static String tables = "u_staff";
-	private static String packageName = "com.xu.tt";
-	private static String url = "localhost:3306/test";
-	private static String userName = "root";
-	private static String password = "shijie";
+	private static String tables = "xxx";
+	private static String packageName = "cn.donganzichan.assets";
+	private static String url = "47.99.246.176:8306/assets"; // localhost:3306/test
+	private static String userName = "root"; // root
+	private static String password = "etYhQX1bEzgAP8ju"; // shijie
 
 	private static String author = "XuDong";
 
