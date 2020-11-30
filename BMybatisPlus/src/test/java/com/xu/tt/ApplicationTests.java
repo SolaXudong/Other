@@ -98,8 +98,8 @@ public class ApplicationTests {
 		log.info("##### select custom sql");
 		List<Map<String, Object>> list1 = userMapper.selectUser1();
 		log.info("##### {}", list1.stream().map(t -> t.get("user_nm")).collect(Collectors.toList()));
-//		List<GUser> list2 = userMapper.selectUser2();
-//		log.info("##### {}", list2.stream().map(t -> t.getUserNm()).collect(Collectors.toList()));
+		List<GUser> list2 = userMapper.selectUser2();
+		log.info("##### {}", list2.stream().map(t -> t.getUserNm()).collect(Collectors.toList()));
 	}
 
 }

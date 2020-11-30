@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
+import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
@@ -44,6 +45,7 @@ public class CodeGenerator {
 		gc.setAuthor(author);
 		gc.setOpen(false);
 		gc.setFileOverride(true);
+		gc.setDateType(DateType.ONLY_DATE);
 		mpg.setGlobalConfig(gc);
 		// 数据源配置
 		DataSourceConfig dsc = new DataSourceConfig();

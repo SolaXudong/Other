@@ -1,6 +1,6 @@
 package com.xu.tt.entity;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -52,7 +52,7 @@ public class GUser {
 	/**
 	 * 注册时间
 	 */
-	private LocalDateTime regDt;
+	private Date regDt;
 
 	/**
 	 * 是否禁用 1是 0否
@@ -67,7 +67,7 @@ public class GUser {
 	/**
 	 * 最后登陆时间
 	 */
-	private LocalDateTime lastLoginDt;
+	private Date lastLoginDt;
 
 	/**
 	 * 最后登陆IP
@@ -88,11 +88,11 @@ public class GUser {
 
 	private Integer insId;
 
-	private LocalDateTime insDt;
+	private Date insDt;
 
 	private Integer updId;
 
-	private LocalDateTime updDt;
+	private Date updDt;
 
 	/**
 	 * 渠道
