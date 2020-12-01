@@ -50,9 +50,9 @@ public class POI2ReadExcel {
 		// 读
 		String path = org.springframework.util.StringUtils
 				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/");
-		String fileName = "1000.xlsx";
-		path = "";
-		fileName = "D:/tt/student学员.xlsx";
+		String fileName = "1.xlsx";
+//		path = "";
+//		fileName = "D:/tt/student学员.xlsx";
 		readExcel(path, fileName);
 		list.stream().forEach(System.out::println);
 		// 写出路径

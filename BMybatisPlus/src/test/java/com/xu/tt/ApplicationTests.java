@@ -50,8 +50,10 @@ public class ApplicationTests {
 		log.info("##### select list");
 		QueryWrapper<GUser> sparamU = new QueryWrapper<>();
 		sparamU.and(t -> t.eq("group_id", 2).likeRight("user_nm", "sola").or().eq("user_nm", "sola4"));
-		sparamU.or(t -> t.eq("user_nm", "sola1"));
+//		sparamU.or(t -> t.eq("user_nm", "sola1"));
 //		sparamU.and(t -> t.eq("user_nm", "xxx"));
+		sparamU.orderByAsc("id");
+		PageHelper.startPage(2, 5, false);
 		List<GUser> list1 = userMapper.selectList(sparamU);
 		log.info("##### {}", list1.stream().map(t -> t.getUserNm()).collect(Collectors.toList()));
 	}

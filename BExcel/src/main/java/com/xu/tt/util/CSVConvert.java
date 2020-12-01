@@ -313,21 +313,12 @@ public class CSVConvert {
 	public static void main(String[] args) throws Exception {
 		long cost = System.currentTimeMillis();
 
-//		List<String[]> list = CSVConvert.readerExcel("D:/tt/student学员.xlsx", "VIP学员信息表", 12);
-//		for (String[] record : list) {
-//			for (String cell : record)
-//				System.out.print(cell + "\t");
-//			System.out.println();
-//		}
-//		System.out.println(list.size());
-
 		ArrayList<JSONObject> rs = Lists.newArrayList();
-		// 测试案件导入模板-Oct-26.xlsx/233.xlsx
-		List<String[]> list = CSVConvert.readerExcel("D:/tt/测试案件导入模板-Oct-26.xlsx", "案件导入模板", 300, 1);
+		// 测试案件导入模板-Oct-26.xlsx #案件导入-新.xlsx
+		List<String[]> list = CSVConvert.readerExcel("D:/tt/excel/案件导入/" + "测试案件导入模板-Oct-26.xlsx", "案件导入模板", 300, 0);
 		for (int i = 0; i < list.size(); i++) {
 			if (i == 0)
 				continue;
-//			System.out.println(i + "\t" + String.join(",", list.get(i)));
 			JSONObject obj = new JSONObject(true);
 			for (int j = 0; j < list.get(i).length; j++) {
 				obj.put("proper_" + j, list.get(i)[j]);
@@ -336,6 +327,7 @@ public class CSVConvert {
 			rs.add(obj);
 		}
 		System.out.println(rs.size());
+		System.out.println(rs.get(0));
 
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s"); // 32s-10W
 	}
