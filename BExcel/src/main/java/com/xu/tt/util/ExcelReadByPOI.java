@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.poi.ooxml.util.SAXHelper;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.openxml4j.opc.PackageAccess;
 import org.apache.poi.ss.util.CellReference;
@@ -27,11 +28,11 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author XuDong 2020-12-01 18:47:25
- * @tips 读取XLSX工具类
+ * @tips POI读取表格工具类
  */
 @Slf4j
 @SuppressWarnings("deprecation")
-public class ExcelRead4XLSXUtil implements SheetContentsHandler {
+public class ExcelReadByPOI implements SheetContentsHandler {
 
 	List<String> title = Lists.newArrayList(); // 表头
 	List<String> originTitle = Lists.newArrayList(); // 原始表头
@@ -44,7 +45,7 @@ public class ExcelRead4XLSXUtil implements SheetContentsHandler {
 
 	public CustomCallback callback;
 
-	public ExcelRead4XLSXUtil(String fileName, CustomCallback callback) {
+	public ExcelReadByPOI(String fileName, CustomCallback callback) {
 		this.fileName = fileName;
 		this.callback = callback;
 	}
@@ -121,28 +122,54 @@ public class ExcelRead4XLSXUtil implements SheetContentsHandler {
 
 	private void processSheet(StylesTable styles, ReadOnlySharedStringsTable strings, InputStream sheetInputStream)
 			throws SAXException, ParserConfigurationException, IOException {
-		XMLReader sheetParser = org.apache.poi.ooxml.util.SAXHelper.newXMLReader();
+		XMLReader sheetParser = SAXHelper.newXMLReader();
 		sheetParser.setContentHandler(new XSSFSheetXMLHandler(styles, strings, this, false));
 		sheetParser.parse(new InputSource(sheetInputStream));
 	}
 
-	public static void main(String[] args) throws Exception {
-		long cost = System.currentTimeMillis();
+	@Override
+	public void headerFooter(String text, boolean isHeader, String tagName) {
+	}
 
-		String dir = org.springframework.util.StringUtils
-				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/");
-//		dir = "D:/tt/excel/案件导入/";
-		String fileName = "student学员.xlsx";
-		String path = dir + fileName;
+	/**
+	 * @tips LOOK 解析表格，返回集合
+	 * @tips fileName-文件名
+	 * @tips path-文件存储路径（含文件名）
+	 * @tips type-业务类型，参考：FileEnum.FileUploadEnum
+	 */
+	public static List<JSONObject> parse(String path) {
+		long cost = System.currentTimeMillis();
+		log.info("##### 解析表格开始……");
 		ArrayList<JSONObject> list = Lists.newArrayList();
-		new ExcelRead4XLSXUtil(path, new CustomCallback() {
+
+		new ExcelReadByPOI(path, new CustomCallback() {
 			@Override
 			public void readRowsSuccess(int rowNum, int readLine, JSONObject rowData, List<String> originData) {
 				list.add(rowData);
 			}
 		}).parse();
+
+		log.info("##### 解析表格结束，cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+		return list;
+	}
+
+	public static void main(String[] args) {
+		long cost = System.currentTimeMillis();
+
+		/** 准备 */
+		String fileName = "test.xlsx";
+		String path = org.springframework.util.StringUtils
+				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/") + fileName;
+		{ // 测试数据量
+//			fileName = "#案件导入-古京-1万条.xlsx";
+//			fileName = "#案件导入-时光-10万条-97971.xlsx";
+//			path = "D:/tt/excel/案件导入/" + fileName;
+		}
+		/** 解析 */
+		List<JSONObject> list = ExcelReadByPOI.parse(path);
 		log.info("##### parse-{}", list.size());
 		System.out.println(list.get(0));
+//		list.stream().forEach(System.out::println);
 
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}

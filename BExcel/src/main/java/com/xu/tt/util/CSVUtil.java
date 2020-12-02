@@ -1,6 +1,7 @@
 package com.xu.tt.util;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -22,6 +23,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -29,6 +31,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -213,6 +218,31 @@ public class CSVUtil {
 		fos.close();
 		long t4 = System.currentTimeMillis();
 		System.out.println("Excel: " + (t4 - t3));
+	}
+
+	public static void writeByStream(String outDir, List<String> tittle, ArrayList<JSONObject> newList) {
+		try (FileOutputStream fos = new FileOutputStream(outDir);
+				OutputStreamWriter osw = new OutputStreamWriter(fos, "GBK");
+				BufferedWriter bw = new BufferedWriter(osw);) {
+			// 表头
+			for (String k : tittle)
+				bw.append(k + ",");
+			bw.append("\n");
+			// 表体
+			for (JSONObject obj : newList) {
+				ArrayList<String> _list = Lists.newArrayList(obj.keySet());
+				for (int i = 0; i < _list.size(); i++) {
+					String _str = StringUtils.isEmpty(obj.getString(_list.get(i))) ? "" : obj.getString(_list.get(i));
+					if (i == _list.size() - 1)
+						bw.append(_str + "\t");
+					else
+						bw.append(_str + "\t,");
+				}
+				bw.append("\n");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

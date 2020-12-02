@@ -108,6 +108,12 @@
 			<artifactId>swagger-bootstrap-ui</artifactId>
 			<version>1.9.6</version>
 		</dependency>
+		<!-- 【easyexcel】 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>easyexcel</artifactId>
+			<version>2.2.6</version>
+		</dependency>
 
 		<!-- devtools 热部署 -->
 		<dependency>
