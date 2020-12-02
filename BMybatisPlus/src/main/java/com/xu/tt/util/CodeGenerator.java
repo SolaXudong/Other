@@ -95,7 +95,7 @@ public class CodeGenerator {
 		strategy.setColumnNaming(NamingStrategy.underline_to_camel);
 		strategy.setEntityLombokModel(true);
 		strategy.setRestControllerStyle(true);
-		strategy.setInclude(tables);
+		strategy.setInclude(tables.split(","));
 		strategy.setControllerMappingHyphenStyle(true);
 		mpg.setStrategy(strategy);
 		mpg.setTemplateEngine(new FreemarkerTemplateEngine());
