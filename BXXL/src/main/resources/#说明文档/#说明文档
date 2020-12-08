@@ -1,0 +1,15 @@
+#依赖
+	<!-- https://mvnrepository.com/artifact/com.xuxueli/xxl-job-core -->
+	<dependency>
+	    <groupId>com.xuxueli</groupId>
+	    <artifactId>xxl-job-core</artifactId>
+	    <version>2.2.0</version>
+	</dependency>
+#初始化数据库
+	/xxl-job/doc/db/tables_xxl_job.sql
+#调度中心配置
+	/xxl-job/xxl-job-admin/src/main/resources/application.properties
+#官方文档
+	#https://www.xuxueli.com/xxl-job/#《分布式任务调度平台XXL-JOB》
+
+
