@@ -157,19 +157,17 @@ public class ExcelReadByPOI implements SheetContentsHandler {
 		long cost = System.currentTimeMillis();
 
 		/** 准备 */
-		String fileName = "test.xlsx";
+		String fileName = "#案件导入-新.xlsx";
+//		fileName = "#案件导入-时光-10万条-97971.xlsx";
 		String path = org.springframework.util.StringUtils
 				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/") + fileName;
-		{ // 测试数据量
-//			fileName = "#案件导入-古京-1万条.xlsx";
-//			fileName = "#案件导入-时光-10万条-97971.xlsx";
-//			path = "D:/tt/excel/案件导入/" + fileName;
-		}
+		path = "D:/tt/excel/案件导入/" + fileName;
 		/** 解析 */
 		List<JSONObject> list = ExcelReadByPOI.parse(path);
 		log.info("##### parse-{}", list.size());
 		System.out.println(list.get(0));
 //		list.stream().forEach(System.out::println);
+		/** 写出 */
 
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}

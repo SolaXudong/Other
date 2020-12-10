@@ -67,35 +67,32 @@ public class ExcelReadByEasyExcel {
 
 		/** 准备 */
 		String fileName = "#案件导入-新.xlsx";
+//		fileName = "#案件导入-时光-10万条-97971.xlsx";
 		String path = org.springframework.util.StringUtils
 				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/") + fileName;
-		{ // 测试数据量
-//			fileName = "#案件导入-古京-1万条.xlsx";
-//			fileName = "#案件导入-时光-10万条-97971.xlsx";
-			path = "D:/tt/excel/案件导入/" + fileName;
-		}
+		path = "D:/tt/excel/案件导入/" + fileName;
 		/** 解析 */
 		List<JSONObject> list = ExcelReadByEasyExcel.parse(path);
 		log.info("##### parse-{}", list.size());
 		System.out.println(list.get(0));
 //		list.stream().forEach(System.out::println);
 		/** 错误数据 */
-		ArrayList<JSONObject> newList = Lists.newArrayList();
-		for (JSONObject obj : list) {
-			JSONObject newObj = new JSONObject(true);
-			newObj.put("占位", "【" + RandomStringUtils.random(4, "0123456789") + "】");
-			newObj.putAll(obj);
-			newList.add(newObj);
-		}
-
+//		ArrayList<JSONObject> newList = Lists.newArrayList();
+//		for (JSONObject obj : list) {
+//			JSONObject newObj = new JSONObject(true);
+//			newObj.put("占位", "【" + RandomStringUtils.random(4, "0123456789") + "】");
+//			newObj.putAll(obj);
+//			newList.add(newObj);
+//		}
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 
 		/** 写出 */
-		cost = System.currentTimeMillis();
-		log.info("##### 写出错误数据开始……");
-		String outDir = path.split("\\.")[0] + "-错误数据.csv";
-		tittle.add(0, "【失败原因】");
-		CSVUtil.writeByStream(outDir, tittle, newList);
+//		cost = System.currentTimeMillis();
+//		log.info("##### 写出错误数据开始……");
+//		String outDir = path.split("\\.")[0] + "-错误数据.csv";
+//		tittle.add(0, "【失败原因】");
+//		CSVUtil.writeByStream(outDir, tittle, newList);
+
 		log.info("##### 写出错误数据结束，cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}
 
