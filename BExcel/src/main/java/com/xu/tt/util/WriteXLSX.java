@@ -1,13 +1,24 @@
 package com.xu.tt.util;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections4.ListUtils;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.openxml4j.opc.PackageAccess;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
@@ -37,57 +48,62 @@ public class WriteXLSX {
 			tittle = csv.getTittle();
 		}
 		JSONObject obj = list.get(0);
+		int type = 3;
 		/** 写出CSV */
-//		log.info("##### 写出数据开始……");
-//		String outDir = path.split("\\.")[0] + "-1万.csv";
-//		int rowNum = 10000 + 1;
-//		int colNum = tittle.size();
-//		ArrayList<JSONObject> newList = Lists.newArrayList();
-//		for (int i = 1; i < rowNum; i++) {
-//			obj = (JSONObject) list.get(0).clone();
-//			for (int j = 0; j < colNum; j++) {
-//				if (j == 0 || j == 10 || j == 12 || j == 13)
-//					obj.put(tittle.get(j), obj.getString(tittle.get(j)) + String.format("%05d", i));
-//			}
-//			newList.add(obj);
-//			if ((i - 1) % (rowNum / 100) == 0)
-//				log.info(new BigDecimal(i - 1).divide(new BigDecimal(rowNum - 1), 4, RoundingMode.HALF_DOWN)
-//						.multiply(new BigDecimal(100)).setScale(2) + "%");
-//		}
-//		CSVUtil.writeByStream(outDir, tittle, newList);
+		if (type == 1) {
+			log.info("##### 写出数据开始……");
+			String outDir = path.split("\\.")[0] + "-1万.csv";
+			int rowNum = 10000 + 1;
+			int colNum = tittle.size();
+			ArrayList<JSONObject> newList = Lists.newArrayList();
+			for (int i = 1; i < rowNum; i++) {
+				obj = (JSONObject) list.get(0).clone();
+				for (int j = 0; j < colNum; j++) {
+					if (j == 0 || j == 10 || j == 12 || j == 13)
+						obj.put(tittle.get(j), obj.getString(tittle.get(j)) + String.format("%05d", i));
+				}
+				newList.add(obj);
+				if ((i - 1) % (rowNum / 100) == 0)
+					log.info(new BigDecimal(i - 1).divide(new BigDecimal(rowNum - 1), 4, RoundingMode.HALF_DOWN)
+							.multiply(new BigDecimal(100)).setScale(2) + "%");
+			}
+			CSVUtil.writeByStream(outDir, tittle, newList);
+		}
 		/** 写出Excel */
-//		int rowNum = 1000 + 1;
-//		int colNum = tittle.size();
-//		String path2 = path.split("\\.")[0] + "-1千.xlsx";
-//		ArrayList<Integer> allId = Lists.newArrayList();
-//		try (InputStream inp = new FileInputStream(path)) {
-//			for (int i = 1; i < rowNum; i++) {
-//				allId.add(i);
-//			}
-//			Workbook wb = WorkbookFactory.create(inp);
-//			try (OutputStream fileOut = new FileOutputStream(path2)) {
-//				wb.write(fileOut);
-//			}
-//			Sheet sheet = wb.getSheetAt(0);
-//			List<List<Integer>> allList = ListUtils.partition(allId, (rowNum - 1) / 10);
-//			for (List<Integer> smallList : allList) {
-//				for (int i : smallList) {
-//					Row row = sheet.createRow(i);
-//					for (int j = 0; j < colNum; j++) {
-//						Cell cell = row.createCell(j);
-//						cell.setCellType(CellType.STRING);
-//						String val = obj.getString(tittle.get(j));
-//						if (j == 0 || j == 10 || j == 12 || j == 13)
-//							cell.setCellValue(val + String.format("%05d", i));
-//						else
-//							cell.setCellValue(val);
-//					}
-//				}
-//				try (OutputStream fileOut = new FileOutputStream(path2)) {
-//					wb.write(fileOut);
-//				}
-//			}
-//		}
+		if (type == 2) {
+			int rowNum = 10 + 1;
+			int colNum = tittle.size();
+			String path2 = path.split("\\.")[0] + "-xx.xlsx";
+			ArrayList<Integer> allId = Lists.newArrayList();
+			try (InputStream inp = new FileInputStream(path)) {
+				for (int i = 1; i < rowNum; i++) {
+					allId.add(i);
+				}
+				Workbook wb = WorkbookFactory.create(inp);
+				try (OutputStream fileOut = new FileOutputStream(path2)) {
+					wb.write(fileOut);
+				}
+				Sheet sheet = wb.getSheetAt(0);
+				List<List<Integer>> allList = ListUtils.partition(allId, (rowNum - 1) / 10);
+				for (List<Integer> smallList : allList) {
+					for (int i : smallList) {
+						Row row = sheet.createRow(i);
+						for (int j = 0; j < colNum; j++) {
+							Cell cell = row.createCell(j);
+							cell.setCellType(CellType.STRING);
+							String val = obj.getString(tittle.get(j));
+							if (j == 0 || j == 10 || j == 12 || j == 13)
+								cell.setCellValue(val + String.format("%05d", i));
+							else
+								cell.setCellValue(val);
+						}
+					}
+					try (OutputStream fileOut = new FileOutputStream(path2)) {
+						wb.write(fileOut);
+					}
+				}
+			}
+		}
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}
 
