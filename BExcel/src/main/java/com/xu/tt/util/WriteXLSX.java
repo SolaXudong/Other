@@ -27,7 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @author XuDong 2020-12-11 14:52:04
  * @tips 代码参考：http://poi.apache.org/components/spreadsheet/quick-guide.html#ReadWriteWorkbook
- * @tips Reading and Rewriting Workbooks
  */
 @Slf4j
 @SuppressWarnings("deprecation")
@@ -71,32 +70,32 @@ public class WriteXLSX {
 		/** 写出Excel */
 		if (type == 2) {
 			String path2 = path.split("\\.")[0] + "-xx.xlsx";
-			int rowNum = 100 + 1;
+			int rowNum = 100;
 			int colNum = tittle.size();
-			ArrayList<Integer> allId = Lists.newArrayList();
-			for (int i = 1; i < rowNum; i++)
-				allId.add(i);
-			System.out.println(allId);
-			try (InputStream inp = new FileInputStream(path)) {
-				Workbook wb = WorkbookFactory.create(inp);
+			ArrayList<Integer> allIds = Lists.newArrayList();
+			for (int i = 1; i <= rowNum; i++)
+				allIds.add(i);
+			try (InputStream is = new FileInputStream(path)) {
+				Workbook wb = WorkbookFactory.create(is);
 				Sheet sheet = wb.getSheetAt(0);
-				for (int i : allId) { // ROW
+				int baseNum = 10000;
+				for (int i : allIds) { // ROW
 					Row row = sheet.createRow(i);
 					for (int j = 0; j < colNum; j++) { // COL
 						Cell cell = row.createCell(j);
 						cell.setCellType(CellType.STRING);
 						String val = obj.getString(tittle.get(j));
 						if (j == 0 || j == 10 || j == 12 || j == 13)
-							cell.setCellValue(val + String.format("%06d", i));
+							cell.setCellValue(val + String.format("%06d", i + baseNum));
 						else
 							cell.setCellValue(val);
 					}
 					if ((i - 1) % (rowNum / 100) == 0)
-						log.info(new BigDecimal(i - 1).divide(new BigDecimal(rowNum - 1), 4, RoundingMode.HALF_DOWN)
+						log.info(new BigDecimal(i - 1).divide(new BigDecimal(rowNum), 4, RoundingMode.HALF_DOWN)
 								.multiply(new BigDecimal(100)).setScale(2) + "%");
 				}
-				try (OutputStream fileOut = new FileOutputStream(path2)) {
-					wb.write(fileOut);
+				try (OutputStream os = new FileOutputStream(path2)) {
+					wb.write(os);
 				}
 			}
 		}
