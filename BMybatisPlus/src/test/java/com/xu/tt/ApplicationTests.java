@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.ImmutableMap;
 import com.xu.tt.entity.GUser;
 import com.xu.tt.mapper.GUserMapper;
 
@@ -82,8 +83,10 @@ public class ApplicationTests {
 	public void testUpdate() {
 		log.info("##### select update");
 		UpdateWrapper<GUser> uparamU = new UpdateWrapper<>();
-		uparamU.set("password", null).set("user_nm", "user_nm001").eq("id", "762");
-		int rs = userMapper.update(null, uparamU);
+		uparamU.set("password", null).set("user_nm", "user_nm002").eq("id", "750");
+//		int rs = userMapper.update(null, uparamU);
+		GUser udtoU = GUser.builder().id(750).userNm("xxx").password(null).build();
+		int rs = userMapper.updateById(udtoU);
 		log.info("##### {}", rs);
 	}
 
@@ -98,10 +101,13 @@ public class ApplicationTests {
 	@Test
 	public void testCustomSQL() {
 		log.info("##### select custom sql");
-		List<Map<String, Object>> list1 = userMapper.selectUser1();
-		log.info("##### {}", list1.stream().map(t -> t.get("user_nm")).collect(Collectors.toList()));
+//		List<Map<String, Object>> list1 = userMapper.selectUser1();
+//		log.info("##### {}", list1.stream().map(t -> t.get("user_nm")).collect(Collectors.toList()));
 		List<GUser> list2 = userMapper.selectUser2();
 		log.info("##### {}", list2.stream().map(t -> t.getUserNm()).collect(Collectors.toList()));
+//		List<GUser> list3 = userMapper.selectUser3();
+//		log.info("##### {}", list3.stream().map(t -> t.getUserNm()).collect(Collectors.toList()));
+//		log.info("##### {}", userMapper.updateC(ImmutableMap.of("id", 402, "name", "moumou")));
 	}
 
 }

@@ -7,4 +7,9 @@
 	<select id="selectUser2" resultType="com.xu.tt.entity.GUser">select * from g_user
 	</select>
 
+	<update id="updateC" parameterType="java.util.Map">update g_user set user_nm =
+		#{name}
+		where id = #{id}
+	</update>
+
 </mapper>
