@@ -13,7 +13,6 @@ import java.util.List;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.openxml4j.opc.PackageAccess;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -29,7 +28,6 @@ import lombok.extern.slf4j.Slf4j;
  * @tips 代码参考：http://poi.apache.org/components/spreadsheet/quick-guide.html#ReadWriteWorkbook
  */
 @Slf4j
-@SuppressWarnings("deprecation")
 public class WriteXLSX {
 
 	public static void main(String[] args) throws Exception {
@@ -72,27 +70,21 @@ public class WriteXLSX {
 			String path2 = path.split("\\.")[0] + "-xx.xlsx";
 			int rowNum = 100;
 			int colNum = tittle.size();
-			ArrayList<Integer> allIds = Lists.newArrayList();
-			for (int i = 1; i <= rowNum; i++)
-				allIds.add(i);
 			try (InputStream is = new FileInputStream(path)) {
 				Workbook wb = WorkbookFactory.create(is);
 				Sheet sheet = wb.getSheetAt(0);
-				int baseNum = 10000;
-				for (int i : allIds) { // ROW
+				int baseNum = 0;
+				for (int i = 1; i <= rowNum; i++) { // ROW
 					Row row = sheet.createRow(i);
 					for (int j = 0; j < colNum; j++) { // COL
 						Cell cell = row.createCell(j);
-						cell.setCellType(CellType.STRING);
+//						cell.setCellType(CellType.STRING);
 						String val = obj.getString(tittle.get(j));
 						if (j == 0 || j == 10 || j == 12 || j == 13)
 							cell.setCellValue(val + String.format("%06d", i + baseNum));
 						else
 							cell.setCellValue(val);
 					}
-					if ((i - 1) % (rowNum / 100) == 0)
-						log.info(new BigDecimal(i - 1).divide(new BigDecimal(rowNum), 4, RoundingMode.HALF_DOWN)
-								.multiply(new BigDecimal(100)).setScale(2) + "%");
 				}
 				try (OutputStream os = new FileOutputStream(path2)) {
 					wb.write(os);
