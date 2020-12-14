@@ -10,7 +10,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections4.ListUtils;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.openxml4j.opc.PackageAccess;
 import org.apache.poi.ss.usermodel.Cell;
@@ -48,7 +47,7 @@ public class WriteXLSX {
 			tittle = csv.getTittle();
 		}
 		JSONObject obj = list.get(0);
-		int type = 3;
+		int type = 2;
 		/** 写出CSV */
 		if (type == 1) {
 			log.info("##### 写出数据开始……");
@@ -71,36 +70,33 @@ public class WriteXLSX {
 		}
 		/** 写出Excel */
 		if (type == 2) {
-			int rowNum = 10 + 1;
-			int colNum = tittle.size();
 			String path2 = path.split("\\.")[0] + "-xx.xlsx";
+			int rowNum = 100 + 1;
+			int colNum = tittle.size();
 			ArrayList<Integer> allId = Lists.newArrayList();
+			for (int i = 1; i < rowNum; i++)
+				allId.add(i);
+			System.out.println(allId);
 			try (InputStream inp = new FileInputStream(path)) {
-				for (int i = 1; i < rowNum; i++) {
-					allId.add(i);
-				}
 				Workbook wb = WorkbookFactory.create(inp);
+				Sheet sheet = wb.getSheetAt(0);
+				for (int i : allId) { // ROW
+					Row row = sheet.createRow(i);
+					for (int j = 0; j < colNum; j++) { // COL
+						Cell cell = row.createCell(j);
+						cell.setCellType(CellType.STRING);
+						String val = obj.getString(tittle.get(j));
+						if (j == 0 || j == 10 || j == 12 || j == 13)
+							cell.setCellValue(val + String.format("%06d", i));
+						else
+							cell.setCellValue(val);
+					}
+					if ((i - 1) % (rowNum / 100) == 0)
+						log.info(new BigDecimal(i - 1).divide(new BigDecimal(rowNum - 1), 4, RoundingMode.HALF_DOWN)
+								.multiply(new BigDecimal(100)).setScale(2) + "%");
+				}
 				try (OutputStream fileOut = new FileOutputStream(path2)) {
 					wb.write(fileOut);
-				}
-				Sheet sheet = wb.getSheetAt(0);
-				List<List<Integer>> allList = ListUtils.partition(allId, (rowNum - 1) / 10);
-				for (List<Integer> smallList : allList) {
-					for (int i : smallList) {
-						Row row = sheet.createRow(i);
-						for (int j = 0; j < colNum; j++) {
-							Cell cell = row.createCell(j);
-							cell.setCellType(CellType.STRING);
-							String val = obj.getString(tittle.get(j));
-							if (j == 0 || j == 10 || j == 12 || j == 13)
-								cell.setCellValue(val + String.format("%05d", i));
-							else
-								cell.setCellValue(val);
-						}
-					}
-					try (OutputStream fileOut = new FileOutputStream(path2)) {
-						wb.write(fileOut);
-					}
 				}
 			}
 		}
