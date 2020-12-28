@@ -1,7 +1,10 @@
 package com.xu.test;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
+import org.bson.Document;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.xu.tt.dto.User;
 import com.xu.tt.service.UserService;
 
@@ -28,16 +34,20 @@ public class Application {
 	private UserService userService;
 
 	@Test
-	public void testMongo() {
+	public void testMongo() throws Exception {
 		long cost = System.currentTimeMillis();
 		/***/
 		log.info("########## 添加");
-		for (int i = 1; i <= 100; i++) {
+		for (int i = 1; i <= 1; i++) {
 			User ipu = User.builder().id(1_0000L + i).name("徐_" + i).idCard("410223_" + i).birth(new Date()).build();
 //			System.out.println(userService.save(ipu));
 		}
 		log.info("########## 修改");
-		User upu = User.builder().id(1L).name("aa").build();
+		User upu = User.builder() //
+				.id(1L) //
+//				.idCard("410223_1") //
+				.name("徐_1-***") //
+				.build();
 //		System.out.println(userService.update(upu));
 		log.info("########## 删除");
 		Query dpu = new Query(Criteria.where("id").is(1L));
@@ -46,8 +56,18 @@ public class Application {
 		Query spu = new Query(Criteria.where("id").is(10030L));
 //		System.out.println(userService.find(spu));
 		log.info("########## 查询多个");
-		Query lpu = new Query(Criteria.where("id").gte(10095L));
+//		Query lpu = new Query(Criteria.where("id").gte(10095L));
 //		userService.findList(lpu).stream().forEach(System.out::println);
+//		Query lpu = new Query(Criteria.where("case_no").regex("^CESHI-WLD-000097.*$"));
+//		List<Document> rs = userService.findListDocument(lpu);
+//		rs.stream().forEach(System.out::println);
+//		JSONObject _obj = JSONObject.parseObject(JSONObject.toJSONString(rs.get(0)));
+//		log.info("{}", _obj);
+//		log.info("########## size-{}", rs.size());
+//		List<Map<String, Object>> rs2 = JSONObject.parseObject(JSONArray.toJSONString(rs),
+//				new TypeReference<List<Map<String, Object>>>() {
+//				});
+//		log.info("########## rs2-{}", rs2);
 		log.info("########## 数量");
 		Query cpu = new Query(Criteria.where("id").gte(10095L));
 //		System.out.println(userService.count(cpu));

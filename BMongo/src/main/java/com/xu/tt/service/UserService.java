@@ -3,6 +3,7 @@ package com.xu.tt.service;
 import java.util.List;
 
 import org.apache.commons.collections4.ListUtils;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -64,6 +65,13 @@ public class UserService {
 	 */
 	public List<User> findList(Query query) {
 		return ListUtils.emptyIfNull(mongoTemplate.find(query, User.class));
+	}
+
+	/**
+	 * @tips LOOK 查询多个
+	 */
+	public List<Document> findListDocument(Query query) {
+		return ListUtils.emptyIfNull(mongoTemplate.find(query, Document.class, "t_case_info"));
 	}
 
 	/**
