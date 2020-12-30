@@ -35,6 +35,14 @@ public class UserService {
 	/**
 	 * @tips LOOK 修改
 	 */
+	public int update(Query query, Update update) {
+		UpdateResult result = mongoTemplate.updateFirst(query, update, User.class);
+		return result != null ? (int) result.getMatchedCount() : 0;
+	}
+
+	/**
+	 * @tips LOOK 修改
+	 */
 	public int update(User user) {
 		Query query = new Query(Criteria.where("id").is(user.getId()));
 		Update update = new Update().set("name", user.getName()).set("passWord", user.getPwd());
