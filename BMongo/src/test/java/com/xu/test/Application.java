@@ -1,7 +1,9 @@
 package com.xu.test;
 
 import java.util.Date;
+import java.util.List;
 
+import org.bson.Document;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +60,7 @@ public class Application {
 		log.info("########## 查询多个");
 //		Query lpu = new Query(Criteria.where("id").gte(10095L));
 //		userService.findList(lpu).stream().forEach(System.out::println);
-//		Query lpu = new Query(Criteria.where("case_no").regex("^CESHI-WLD-000097.*$"));
+		Query lpu = new Query(Criteria.where("case_no").regex("^CESHI-SGFQ-0007801.*$"));
 //		List<Document> rs = userService.findListDocument(lpu);
 //		rs.stream().forEach(System.out::println);
 //		JSONObject _obj = JSONObject.parseObject(JSONObject.toJSONString(rs.get(0)));
