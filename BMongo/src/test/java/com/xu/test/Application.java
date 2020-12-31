@@ -1,9 +1,11 @@
 package com.xu.test;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import org.bson.Document;
+import org.bson.types.Decimal128;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
 import com.google.common.collect.Lists;
 import com.xu.tt.dto.User;
 import com.xu.tt.service.UserService;
@@ -60,11 +64,20 @@ public class Application {
 		log.info("########## 查询多个");
 //		Query lpu = new Query(Criteria.where("id").gte(10095L));
 //		userService.findList(lpu).stream().forEach(System.out::println);
-		Query lpu = new Query(Criteria.where("case_no").regex("^CESHI-SGFQ-0007801.*$"));
-//		List<Document> rs = userService.findListDocument(lpu);
-//		rs.stream().forEach(System.out::println);
-//		JSONObject _obj = JSONObject.parseObject(JSONObject.toJSONString(rs.get(0)));
-//		log.info("{}", _obj);
+		Query lpu = new Query(Criteria.where("case_no").regex("^XXXXX_XXX-000001-0.*$"));
+		List<Document> rs = userService.findListDocument(lpu);
+		for (Document _doc : rs) {
+			JSONObject _obj = JSONObject.parseObject(JSONObject.toJSONString(_doc), Feature.OrderedField);
+			log.info("{}", _obj);
+			JSONObject _newObj = new JSONObject(true);
+			for (String _key : _obj.keySet()) {
+				if (_doc.get(_key) instanceof Decimal128) // org.bson.types.Decimal128
+					_newObj.put(_key, new BigDecimal(_doc.get(_key) + ""));
+				else
+					_newObj.put(_key, _doc.get(_key));
+			}
+			log.info("\t{}", _newObj);
+		}
 //		log.info("########## size-{}", rs.size());
 //		List<Map<String, Object>> rs2 = JSONObject.parseObject(JSONArray.toJSONString(rs),
 //				new TypeReference<List<Map<String, Object>>>() {
