@@ -1,6 +1,7 @@
 package com.xu.tt;
 
 import java.sql.Connection;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
@@ -14,14 +15,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.xu.tt.dao.GUserMapper;
+import com.xu.tt.dao.UserMapper;
 import com.xu.tt.dto.CCase;
 import com.xu.tt.dto.GUser;
 import com.xu.tt.dto.TExcel;
+import com.xu.tt.dto.User;
 import com.xu.tt.service.B_UserService;
 import com.xu.tt.service.CCaseService;
 import com.xu.tt.service.UserService;
@@ -48,7 +50,9 @@ class ApplicationTests {
 	@Autowired
 	private CCaseService caseService;
 	@Autowired
-	GUserMapper userMapper;
+	private GUserMapper userMapper;
+	@Autowired
+	private UserMapper uMapper;
 
 	/**
 	 * @tips LOOK 测Service
@@ -56,9 +60,29 @@ class ApplicationTests {
 	@Test
 	public void testService() throws Exception {
 		log.info("########## 【test Service from different datasource】");
-		log.info("########## list: {}", JSONObject.toJSON(userService.getUserList()));
-		log.info("########## list: {}", JSONObject.toJSON(userService.getUserList1()));
-		log.info("########## list: {}", JSONObject.toJSON(userService.getUserList2()));
+//		log.info("########## list: {}", JSONObject.toJSON(userService.getUserList()));
+//		log.info("########## list: {}", JSONObject.toJSON(userService.getUserList1()));
+//		log.info("########## list: {}", JSONObject.toJSON(userService.getUserList2()));
+		log.info("########## prepare data");
+//		System.out.println(uMapper.selectOne(User.builder().id(1).build()));
+//		System.out.println(uMapper.selectMap());
+//		System.out.println(uMapper.selectObj());
+		List<User> list = Lists.newArrayList();
+		for (int i = 1; i <= 5000; i++)
+			list.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
+		{
+			log.info("########## batch insert");
+			long cost = System.currentTimeMillis();
+//			uMapper.insertListCustom(list);
+			log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+		}
+		{
+			log.info("########## single insert");
+			long cost = System.currentTimeMillis();
+//			for (User dto : list)
+//				userService.insert(dto);
+			log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+		}
 	}
 
 	/**
@@ -103,7 +127,7 @@ class ApplicationTests {
 	@Test
 	public void testTransaction() throws Exception {
 		log.info("########## 【test transaction】");
-		userService.transaction();
+//		userService.transaction();
 //		b_userService.transactionMulti();
 	}
 

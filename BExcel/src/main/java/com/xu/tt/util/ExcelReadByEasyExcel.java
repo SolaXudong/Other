@@ -2,10 +2,7 @@ package com.xu.tt.util;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.lang3.RandomStringUtils;
 
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.context.AnalysisContext;
@@ -67,10 +64,10 @@ public class ExcelReadByEasyExcel {
 
 		/** 准备 */
 		String fileName = "#案件导入-新.xlsx";
-//		fileName = "#案件导入-时光-10万条-97971.xlsx";
+		fileName = "测试案件导入模板-Oct-26.xlsx"; // 10万数据7.9s
 		String path = org.springframework.util.StringUtils
 				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/") + fileName;
-		path = "D:/tt/excel/案件导入/" + fileName;
+		path = "D:/tt/excel/#测试专用/" + fileName;
 		/** 解析 */
 		List<JSONObject> list = ExcelReadByEasyExcel.parse(path);
 		log.info("##### parse-{}", list.size());

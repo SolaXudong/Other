@@ -126,8 +126,8 @@ public class XLSX2CSV {
 	public static void main(String[] args) throws Exception {
 		long cost = System.currentTimeMillis();
 
-		String fileName = "案件导入-十万 - 副本.xlsx";
-//		fileName = "#案件导入-时光-10万条-97971.xlsx";
+		String fileName = "案件导入模板.xlsx";
+		fileName = "测试案件导入模板-Oct-26.xlsx"; // 10万数据7.7s
 		String path = "D:/tt/excel/#测试专用/" + fileName;
 
 		List<JSONObject> list = Lists.newArrayList();

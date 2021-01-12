@@ -1,15 +1,23 @@
 package com.xu.test;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import org.bson.Document;
+import org.bson.types.Decimal128;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
+import com.google.common.collect.Lists;
 import com.xu.tt.dto.User;
 import com.xu.tt.service.UserService;
 
@@ -28,17 +36,25 @@ public class Application {
 	private UserService userService;
 
 	@Test
-	public void testMongo() {
+	public void testMongo() throws Exception {
 		long cost = System.currentTimeMillis();
 		/***/
 		log.info("########## 添加");
-		for (int i = 1; i <= 100; i++) {
+		for (int i = 1; i <= 3; i++) {
 			User ipu = User.builder().id(1_0000L + i).name("徐_" + i).idCard("410223_" + i).birth(new Date()).build();
 //			System.out.println(userService.save(ipu));
 		}
 		log.info("########## 修改");
-		User upu = User.builder().id(1L).name("aa").build();
+		User upu = User.builder() //
+				.id(1L) //
+//				.idCard("410223_1") //
+				.name("徐_1-***") //
+				.build();
 //		System.out.println(userService.update(upu));
+		Query query = new Query(
+				Criteria.where("idCard").in(Lists.newArrayList("410223_1,410223_2,410223_3".split(","))));
+		Update mupdate = new Update().set("tag", "B");
+//		System.out.println(userService.update(query, mupdate));
 		log.info("########## 删除");
 		Query dpu = new Query(Criteria.where("id").is(1L));
 //		System.out.println(userService.delete(dpu));
@@ -46,8 +62,27 @@ public class Application {
 		Query spu = new Query(Criteria.where("id").is(10030L));
 //		System.out.println(userService.find(spu));
 		log.info("########## 查询多个");
-		Query lpu = new Query(Criteria.where("id").gte(10095L));
+//		Query lpu = new Query(Criteria.where("id").gte(10095L));
 //		userService.findList(lpu).stream().forEach(System.out::println);
+		Query lpu = new Query(Criteria.where("case_no").regex("^XXXXX_XXX-000001-0.*$"));
+		List<Document> rs = userService.findListDocument(lpu);
+		for (Document _doc : rs) {
+			JSONObject _obj = JSONObject.parseObject(JSONObject.toJSONString(_doc), Feature.OrderedField);
+			log.info("{}", _obj);
+			JSONObject _newObj = new JSONObject(true);
+			for (String _key : _obj.keySet()) {
+				if (_doc.get(_key) instanceof Decimal128) // org.bson.types.Decimal128
+					_newObj.put(_key, new BigDecimal(_doc.get(_key) + ""));
+				else
+					_newObj.put(_key, _doc.get(_key));
+			}
+			log.info("\t{}", _newObj);
+		}
+//		log.info("########## size-{}", rs.size());
+//		List<Map<String, Object>> rs2 = JSONObject.parseObject(JSONArray.toJSONString(rs),
+//				new TypeReference<List<Map<String, Object>>>() {
+//				});
+//		log.info("########## rs2-{}", rs2);
 		log.info("########## 数量");
 		Query cpu = new Query(Criteria.where("id").gte(10095L));
 //		System.out.println(userService.count(cpu));

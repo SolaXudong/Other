@@ -68,7 +68,7 @@ public class WriteXLSX {
 		/** 写出Excel */
 		if (type == 2) {
 			String path2 = path.split("\\.")[0] + "-xx.xlsx";
-			int rowNum = 100;
+			int rowNum = 10000;
 			int colNum = tittle.size();
 			try (InputStream is = new FileInputStream(path)) {
 				Workbook wb = WorkbookFactory.create(is);
