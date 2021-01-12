@@ -3,6 +3,7 @@ package com.xu.tt.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.TemplateConfig;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
@@ -24,12 +26,11 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
  *       3.数据库地址<br>
  *       注：默认生成Dto、Dao，如需Service、Controller，NULL处注掉，如需XML，解开注释<br>
  */
-@SuppressWarnings({ "unused" })
 public class CodeGenerator {
 
 	private static String tables = "xxx";
 	private static String packageName = "cn.donganzichan.assets";
-	private static String url = "47.99.246.176:8306/assets"; // localhost:3306/test
+	private static String url = "47.96.26.156:8306/assets"; // localhost:3306/test
 	private static String userName = "root"; // root
 	private static String password = "etYhQX1bEzgAP8ju"; // shijie
 
@@ -71,15 +72,15 @@ public class CodeGenerator {
 		// 自定义输出配置
 		List<FileOutConfig> focList = new ArrayList<>();
 		// 自定义配置会被优先输出
-//		focList.add(new FileOutConfig(templatePath) {
-//			@Override
-//			public String outputFile(TableInfo tableInfo) {
-//				// 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
-//				return projectPath + "/src/main/resources/mapper/"
-////						+ pc.getModuleName() + "/"
-//						+ tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
-//			}
-//		});
+		focList.add(new FileOutConfig(templatePath) {
+			@Override
+			public String outputFile(TableInfo tableInfo) {
+				// 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+				return projectPath + "/src/main/resources/mapper/"
+//						+ pc.getModuleName() + "/"
+						+ tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+			}
+		});
 		cfg.setFileOutConfigList(focList);
 		mpg.setCfg(cfg);
 		// 配置模板
