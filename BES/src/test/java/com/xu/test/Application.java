@@ -33,11 +33,12 @@ public class Application {
 		try {
 			/** init */
 			RestHighLevelClient client = new RestHighLevelClient(
-					RestClient.builder(new HttpHost("localhost", 9200, "http"))); // https://47.96.26.156:9200
+					RestClient.builder(new HttpHost("localhost", 9200, "http")));
+//					RestClient.builder(new HttpHost("47.96.26.156", 9200, "http")));
 			log.info("##### init: {}", client.toString());
 			/** insert */
 			/** get */
-			GetRequest getRequest = new GetRequest("posts", "1");
+			GetRequest getRequest = new GetRequest("index", "1");
 			GetResponse getResponse = client.get(getRequest, RequestOptions.DEFAULT);
 			log.info("##### get: {}", getResponse.getSource());
 			/** update */
