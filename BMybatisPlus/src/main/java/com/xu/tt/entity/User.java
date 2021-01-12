@@ -1,13 +1,10 @@
-package com.xu.tt.dto;
+package com.xu.tt.entity;
 
 import java.util.Date;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,13 +15,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
 public class User {
 	/**
 	 * 主键： 1-xx 2-yy 3-zz
 	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@TableId(value = "id", type = IdType.AUTO)
 	private Integer id;
 
 	/**

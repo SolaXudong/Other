@@ -21,6 +21,18 @@ public class UserService {
 	@Autowired
 	UserMapper userMapper;
 
+	public User selectOne() {
+		return userMapper.selectOne(User.builder().id(1).build());
+	}
+
+	public void insert(User dto) throws Exception {
+		userMapper.insert(dto);
+	}
+
+	public void insertList(List<User> list) throws Exception {
+		userMapper.insertList(list);
+	}
+
 	public List<User> getUserList() throws Exception {
 		List<User> list = ListUtils.emptyIfNull(userMapper.selectAll());
 		return list;
