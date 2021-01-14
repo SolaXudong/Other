@@ -18,12 +18,12 @@ public interface UserMapper extends MyMapper<User> {
 	List<User> selectObj();
 
 	@Insert("<script>" //
-			+ "insert into user(id, name, age, birth)" //
+			+ "insert ignore into user(id, name, age, birth)" //
 			+ " values" //
 			+ "<foreach collection=\"list\" item=\"data\" separator=\",\">" //
 			+ "(#{data.id}, #{data.name}, #{data.age}, #{data.birth})" //
 			+ "</foreach>" //
 			+ "</script>")
-	void insertListCustom(List<User> list);
+	int insertListCustom(List<User> list);
 
 }

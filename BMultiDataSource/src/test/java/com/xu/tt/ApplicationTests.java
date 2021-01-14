@@ -68,20 +68,20 @@ class ApplicationTests {
 //		System.out.println(uMapper.selectMap());
 //		System.out.println(uMapper.selectObj());
 		List<User> list = Lists.newArrayList();
-		for (int i = 1; i <= 5000; i++)
-			list.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
+		for (int i = 1; i <= 1000; i++)
+			list.add(User.builder().id(i).name("哈哈_" + i).age(10 + i).birth(new Date()).build());
 		{
-			log.info("########## batch insert");
-			long cost = System.currentTimeMillis();
-//			uMapper.insertListCustom(list);
-			log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+//			log.info("########## batch insert");
+//			long cost = System.currentTimeMillis();
+//			System.out.println(uMapper.insertListCustom(list));
+//			log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 		}
 		{
-			log.info("########## single insert");
-			long cost = System.currentTimeMillis();
+//			log.info("########## single insert");
+//			long cost = System.currentTimeMillis();
 //			for (User dto : list)
 //				userService.insert(dto);
-			log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+//			log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 		}
 	}
 
