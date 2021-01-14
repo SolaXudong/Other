@@ -34,7 +34,7 @@ public class WriteXLSX {
 		long cost = System.currentTimeMillis();
 		/** 准备 */
 		String fileName = "案件导入模板.xlsx";
-		String path = "D:/tt/excel/#测试专用/" + fileName;
+		String path = "D:/tt/excel/#重构/" + fileName;
 		/** 读一条模板 */
 		List<JSONObject> list = Lists.newArrayList();
 		List<String> tittle = Lists.newArrayList();
@@ -48,15 +48,15 @@ public class WriteXLSX {
 		/** 写出CSV */
 		if (type == 1) {
 			log.info("##### 写出数据开始……");
-			String outDir = path.split("\\.")[0] + "-1万.csv";
-			int rowNum = 10000 + 1;
+			String outDir = path.split("\\.")[0] + "-xx.csv";
+			int rowNum = 10000;
 			int colNum = tittle.size();
 			ArrayList<JSONObject> newList = Lists.newArrayList();
-			for (int i = 1; i < rowNum; i++) {
+			for (int i = 1; i <= rowNum; i++) { // ROW
 				obj = (JSONObject) list.get(0).clone();
 				for (int j = 0; j < colNum; j++) {
 					if (j == 0 || j == 10 || j == 12 || j == 13)
-						obj.put(tittle.get(j), obj.getString(tittle.get(j)) + String.format("%05d", i));
+						obj.put(tittle.get(j), obj.getString(tittle.get(j)) + String.format("%06d", i));
 				}
 				newList.add(obj);
 				if ((i - 1) % (rowNum / 100) == 0)
@@ -67,18 +67,18 @@ public class WriteXLSX {
 		}
 		/** 写出Excel */
 		if (type == 2) {
-			String path2 = path.split("\\.")[0] + "-xx.xlsx";
-			int rowNum = 10000;
+			String path2 = path.split("\\.")[0] + "-xxx.xlsx";
+			int rowNum = 1;
+			int rowNumMax = 10000;
 			int colNum = tittle.size();
 			try (InputStream is = new FileInputStream(path)) {
 				Workbook wb = WorkbookFactory.create(is);
 				Sheet sheet = wb.getSheetAt(0);
 				int baseNum = 0;
-				for (int i = 1; i <= rowNum; i++) { // ROW
+				for (int i = rowNum; i <= rowNumMax; i++) { // ROW
 					Row row = sheet.createRow(i);
 					for (int j = 0; j < colNum; j++) { // COL
 						Cell cell = row.createCell(j);
-//						cell.setCellType(CellType.STRING);
 						String val = obj.getString(tittle.get(j));
 						if (j == 0 || j == 10 || j == 12 || j == 13)
 							cell.setCellValue(val + String.format("%06d", i + baseNum));

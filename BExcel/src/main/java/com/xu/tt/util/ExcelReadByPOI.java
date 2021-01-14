@@ -7,10 +7,10 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.poi.ooxml.util.SAXHelper;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.openxml4j.opc.PackageAccess;
 import org.apache.poi.ss.util.CellReference;
+import org.apache.poi.util.XMLHelper;
 import org.apache.poi.xssf.eventusermodel.ReadOnlySharedStringsTable;
 import org.apache.poi.xssf.eventusermodel.XSSFReader;
 import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler;
@@ -31,7 +31,6 @@ import lombok.extern.slf4j.Slf4j;
  * @tips POI读取表格工具类
  */
 @Slf4j
-@SuppressWarnings("deprecation")
 public class ExcelReadByPOI implements SheetContentsHandler {
 
 	List<String> title = Lists.newArrayList(); // 表头
@@ -122,7 +121,8 @@ public class ExcelReadByPOI implements SheetContentsHandler {
 
 	private void processSheet(StylesTable styles, ReadOnlySharedStringsTable strings, InputStream sheetInputStream)
 			throws SAXException, ParserConfigurationException, IOException {
-		XMLReader sheetParser = SAXHelper.newXMLReader();
+//		XMLReader sheetParser = SAXHelper.newXMLReader();
+		XMLReader sheetParser = XMLHelper.newXMLReader();
 		sheetParser.setContentHandler(new XSSFSheetXMLHandler(styles, strings, this, false));
 		sheetParser.parse(new InputSource(sheetInputStream));
 	}
