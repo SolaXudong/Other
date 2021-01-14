@@ -34,11 +34,11 @@ public class MyProducer {
 		// 实例化消息生产者Producer
 		DefaultMQProducer producer = new DefaultMQProducer("please_rename_unique_group_name");
 		// 设置NameServer的地址
-		producer.setNamesrvAddr(Const.IP + ":" + Const.PORT);
+		producer.setNamesrvAddr(Const.MQ_ADDR);
 		try {
 			// 启动Producer实例
 			producer.start();
-			for (int i = 1; i <= 2; i++) {
+			for (int i = 1; i <= 10; i++) {
 				// 创建消息，并指定Topic，Tag和消息体
 				Message msg = new Message(
 						/* Topic */
@@ -68,7 +68,7 @@ public class MyProducer {
 		// 实例化消息生产者Producer
 		DefaultMQProducer producer = new DefaultMQProducer("please_rename_unique_group_name");
 		// 设置NameServer的地址
-		producer.setNamesrvAddr(Const.IP + ":" + Const.PORT);
+		producer.setNamesrvAddr(Const.MQ_ADDR);
 		// 启动Producer实例
 		producer.start();
 		producer.setRetryTimesWhenSendAsyncFailed(0);
@@ -107,7 +107,7 @@ public class MyProducer {
 		// 实例化消息生产者Producer
 		DefaultMQProducer producer = new DefaultMQProducer("please_rename_unique_group_name");
 		// 设置NameServer的地址
-		producer.setNamesrvAddr(Const.IP + ":" + Const.PORT);
+		producer.setNamesrvAddr(Const.MQ_ADDR);
 		// 启动Producer实例
 		producer.start();
 		for (int i = 0; i < 100; i++) {

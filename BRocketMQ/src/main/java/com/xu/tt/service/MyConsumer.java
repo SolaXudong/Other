@@ -8,7 +8,6 @@ import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
-import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.common.message.MessageExt;
 
 import com.xu.tt.common.Const;
@@ -18,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @author XuDong 2020-12-14 22:47:49
  * @tips 消费者
+ * @tips 代码参考：https://www.cnblogs.com/lizhangyong/p/8978855.html
  */
 @Slf4j
 public class MyConsumer {
@@ -26,7 +26,8 @@ public class MyConsumer {
 		// 实例化消费者
 		DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("please_rename_unique_group_name");
 		// 设置NameServer的地址
-		consumer.setNamesrvAddr(Const.IP + ":" + Const.PORT);
+		consumer.setNamesrvAddr(Const.MQ_ADDR);
+		consumer.setConsumeMessageBatchMaxSize(2);
 		// 设置Consumer第一次启动是从队列头部开始消费还是队列尾部开始消费
 		consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
 		try {
@@ -38,13 +39,15 @@ public class MyConsumer {
 				@Override
 				public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list,
 						ConsumeConcurrentlyContext context) {
-					System.out.printf("##### %s Receive New Messages: %s %n", Thread.currentThread().getName(), list);
-					Message msg = list.get(0);
-					String topic = msg.getTopic();
-					String body = new String(msg.getBody());
-					String keys = msg.getKeys();
-					String tags = msg.getTags();
-					log.info("##### topic-{}, body-{}, keys-{}, tags-{}", topic, body, keys, tags);
+					System.out.printf("##### %s %s Receive New Messages: %s %n", Thread.currentThread().getName(),
+							list.size(), list);
+					for (MessageExt _msg : list) {
+						String topic = _msg.getTopic();
+						String body = new String(_msg.getBody());
+						String keys = _msg.getKeys();
+						String tags = _msg.getTags();
+						log.info("##### topic-{}, body-{}, keys-{}, tags-{}", topic, body, keys, tags);
+					}
 					// 标记该消息已经被成功消费
 					return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
 				}
