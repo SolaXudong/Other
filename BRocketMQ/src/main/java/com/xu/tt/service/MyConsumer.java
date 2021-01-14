@@ -27,7 +27,8 @@ public class MyConsumer {
 		DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("please_rename_unique_group_name");
 		// 设置NameServer的地址
 		consumer.setNamesrvAddr(Const.MQ_ADDR);
-		consumer.setConsumeMessageBatchMaxSize(2);
+//		consumer.setPullBatchSize(32); // 默认32
+//		consumer.setConsumeMessageBatchMaxSize(10); // 默认1
 		// 设置Consumer第一次启动是从队列头部开始消费还是队列尾部开始消费
 		consumer.setConsumeFromWhere(ConsumeFromWhere.CONSUME_FROM_FIRST_OFFSET);
 		try {
