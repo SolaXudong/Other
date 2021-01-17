@@ -13,7 +13,7 @@
 	</update>
 
 	<insert id="insertListCustom">
-		insert into user(id, name, age, birth) values
+		insert into user() values
 		<foreach collection="list" item="data" separator=",">
 			(#{data.id},
 			#{data.name}, #{data.age}, #{data.birth})

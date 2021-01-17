@@ -19,6 +19,7 @@ import com.xu.tt.entity.GUser;
 import com.xu.tt.entity.User;
 import com.xu.tt.mapper.GUserMapper;
 import com.xu.tt.mapper.UserMapper;
+import com.xu.tt.service.IUserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,13 +35,15 @@ public class ApplicationTests {
 	private GUserMapper userMapper;
 	@Autowired
 	private UserMapper uMapper;
+	@Autowired
+	private IUserService userService;
 
 	@Test
 	public void testSelectOne() {
 		log.info("##### select one");
 		GUser u1 = userMapper.selectById("763");
 		log.info("##### {}", u1);
-		GUser u2 = userMapper.selectById(763);
+		GUser u2 = userMapper.selectById(1);
 		log.info("##### {}", u2);
 		QueryWrapper<GUser> sparamU = new QueryWrapper<>();
 		sparamU.eq("user_nm", "sola1");
@@ -118,6 +121,7 @@ public class ApplicationTests {
 		for (int i = 1; i <= 5000; i++)
 			list.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
 //		userMapper.insertListCustom(list);
+//		userService.saveBatch(list);
 //		for (User dto : list)
 //			uMapper.insert(dto);
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
