@@ -33,7 +33,7 @@ public class WriteXLSX {
 	public static void main(String[] args) throws Exception {
 		long cost = System.currentTimeMillis();
 		/** 准备 */
-		String fileName = "案件导入模板.xlsx";
+		String fileName = "案件导入模板2.xlsx";
 		String path = "D:/tt/excel/#重构/" + fileName;
 		/** 读一条模板 */
 		List<JSONObject> list = Lists.newArrayList();
@@ -55,7 +55,7 @@ public class WriteXLSX {
 			for (int i = 1; i <= rowNum; i++) { // ROW
 				obj = (JSONObject) list.get(0).clone();
 				for (int j = 0; j < colNum; j++) {
-					if (j == 0 || j == 10 || j == 12 || j == 13)
+					if (j == 0 || j == 8 || j == 10 || j == 11)
 						obj.put(tittle.get(j), obj.getString(tittle.get(j)) + String.format("%06d", i));
 				}
 				newList.add(obj);
@@ -69,7 +69,7 @@ public class WriteXLSX {
 		if (type == 2) {
 			String path2 = path.split("\\.")[0] + "-xxx.xlsx";
 			int rowNum = 1;
-			int rowNumMax = 10000;
+			int rowNumMax = 1000;
 			int colNum = tittle.size();
 			try (InputStream is = new FileInputStream(path)) {
 				Workbook wb = WorkbookFactory.create(is);
@@ -80,8 +80,8 @@ public class WriteXLSX {
 					for (int j = 0; j < colNum; j++) { // COL
 						Cell cell = row.createCell(j);
 						String val = obj.getString(tittle.get(j));
-						if (j == 0 || j == 10 || j == 12 || j == 13)
-							cell.setCellValue(val + String.format("%06d", i + baseNum));
+						if (j == 0 || j == 8 || j == 10 || j == 11)
+							cell.setCellValue(val.trim() + String.format("%06d", i + baseNum));
 						else
 							cell.setCellValue(val);
 					}
