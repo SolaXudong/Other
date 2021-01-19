@@ -33,7 +33,7 @@ public class WriteXLSX {
 	public static void main(String[] args) throws Exception {
 		long cost = System.currentTimeMillis();
 		/** 准备 */
-		String fileName = "案件导入模板2.xlsx";
+		String fileName = "案件导入模板-造数据用.xlsx";
 		String path = "D:/tt/excel/#重构/" + fileName;
 		/** 读一条模板 */
 		List<JSONObject> list = Lists.newArrayList();
@@ -69,7 +69,7 @@ public class WriteXLSX {
 		if (type == 2) {
 			String path2 = path.split("\\.")[0] + "-xxx.xlsx";
 			int rowNum = 1;
-			int rowNumMax = 1000;
+			int rowNumMax = 10;
 			int colNum = tittle.size();
 			try (InputStream is = new FileInputStream(path)) {
 				Workbook wb = WorkbookFactory.create(is);

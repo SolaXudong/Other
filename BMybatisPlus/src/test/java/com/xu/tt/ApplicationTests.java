@@ -42,13 +42,17 @@ public class ApplicationTests {
 	public void testSelectOne() {
 		log.info("##### select one");
 		GUser u1 = userMapper.selectById("763");
-		log.info("##### {}", u1);
+		log.info("##### u1-{}", u1);
 		GUser u2 = userMapper.selectById(1);
-		log.info("##### {}", u2);
+		log.info("##### u2-{}", u2);
 		QueryWrapper<GUser> sparamU = new QueryWrapper<>();
 		sparamU.eq("user_nm", "sola1");
 		GUser u3 = userMapper.selectOne(sparamU);
-		log.info("##### {}", u3);
+		log.info("##### u3-{}", u3);
+		QueryWrapper<GUser> cparamUser = new QueryWrapper<>();
+		cparamUser.eq("user_nm", "xiaohongzi");
+		Integer count = userMapper.selectCount(cparamUser);
+		log.info("##### count-{}", count);
 	}
 
 	/**
