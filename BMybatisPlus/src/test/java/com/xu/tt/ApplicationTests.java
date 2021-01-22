@@ -122,12 +122,12 @@ public class ApplicationTests {
 //		log.info("##### {}", list3.stream().map(t -> t.getUserNm()).collect(Collectors.toList()));
 //		log.info("##### {}", userMapper.updateC(ImmutableMap.of("id", 402, "name", "moumou")));
 		ArrayList<User> list = Lists.newArrayList();
-		for (int i = 1; i <= 2; i++)
+		for (int i = 1; i <= 100000; i++)
 			list.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
-//		userMapper.insertListCustom(list); // 10000[noId(3.1s 2.8s 3.1s)/haveId(3.5s 2.8s 3.0s)]
-//		userService.saveBatch(list); // 10000[noId(11.9s)/haveId(13.1s)]
+//		userMapper.insertListCustom(list); // 100000-3.0s)
+//		userService.saveBatch(list); // 100000-15s
 //		for (User dto : list)
-//			uMapper.insert(dto); // 1000[8s]
+//			uMapper.insert(dto); // 1000-5s
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}
 

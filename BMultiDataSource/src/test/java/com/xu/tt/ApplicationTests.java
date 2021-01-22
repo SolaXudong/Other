@@ -68,13 +68,13 @@ class ApplicationTests {
 //		System.out.println(uMapper.selectMap());
 //		System.out.println(uMapper.selectObj());
 		List<User> list = Lists.newArrayList();
-		for (int i = 1; i <= 10000; i++)
+		for (int i = 1; i <= 100000; i++)
 			list.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
 		long cost = System.currentTimeMillis();
-//		System.out.println(uMapper.insertListCustom(list)); // 10000[noId(2.8s 2.7s 2.7s)/haveId(2.8s 3.1s 3.0s)]
-//		System.out.println(uMapper.insertList(list)); // 10000[noId(3.0s 2.7s 3.0s)/haveId(3.4s 2.7s 2.9s)]
+//		System.out.println(uMapper.insertListCustom(list)); // 10000-3s
+//		System.out.println(uMapper.insertList(list)); // 10000-3s
 //		for (User dto : list)
-//			userService.insert(dto); // 1000[8s]
+//			userService.insert(dto); // 1000-xs
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}
 
