@@ -122,8 +122,8 @@ public class ApplicationTests {
 //		log.info("##### {}", list3.stream().map(t -> t.getUserNm()).collect(Collectors.toList()));
 //		log.info("##### {}", userMapper.updateC(ImmutableMap.of("id", 402, "name", "moumou")));
 		ArrayList<User> list = Lists.newArrayList();
-		for (int i = 1; i <= 100000; i++)
-			list.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
+		for (int i = 1; i <= 10; i++)
+			list.add(User.builder().id(i).name("哈哈_" + i).age(10 + i).birth(new Date()).build());
 //		userMapper.insertListCustom(list); // 100000-3.0s)
 //		userService.saveBatch(list); // 100000-15s
 //		for (User dto : list)

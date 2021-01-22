@@ -20,6 +20,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.xu.tt.dao.GUserMapper;
 import com.xu.tt.dao.UserMapper;
+import com.xu.tt.dao.UserMapper2;
 import com.xu.tt.dto.CCase;
 import com.xu.tt.dto.GUser;
 import com.xu.tt.dto.TExcel;
@@ -53,6 +54,8 @@ class ApplicationTests {
 	private GUserMapper userMapper;
 	@Autowired
 	private UserMapper uMapper;
+	@Autowired
+	private UserMapper2 uMapper2;
 
 	/**
 	 * @tips LOOK 测Service
@@ -68,11 +71,12 @@ class ApplicationTests {
 //		System.out.println(uMapper.selectMap());
 //		System.out.println(uMapper.selectObj());
 		List<User> list = Lists.newArrayList();
-		for (int i = 1; i <= 100000; i++)
+		for (int i = 1; i <= 2; i++)
 			list.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
 		long cost = System.currentTimeMillis();
 //		System.out.println(uMapper.insertListCustom(list)); // 10000-3s
-//		System.out.println(uMapper.insertList(list)); // 10000-3s
+//		System.out.println(uMapper.insertListCustom2(list)); // 10000-3s
+//		System.out.println(uMapper2.insertList(list));
 //		for (User dto : list)
 //			userService.insert(dto); // 1000-xs
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
