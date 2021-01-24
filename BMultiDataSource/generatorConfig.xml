@@ -13,9 +13,9 @@
 			<property name="mappers"
 				value="com.xu.tt.util.mybatis.MyMapper" />
 		</plugin>
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://47.110.135.139:8306/debt_test"
-			userId="dongan_test" password="8dP9x123aV">
+		<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/test?serverTimezone=UTC"
+			userId="root" password="shijie">
 		</jdbcConnection>
 
 		<!-- 对于生成的pojo所在包 -->
@@ -29,13 +29,7 @@
 			targetProject="src/main/java" type="XMLMAPPER" />
 
 		<!-- 要生成的表名（加了主键自增） -->
-		<!-- <table tableName="g_user"> -->
-		<!-- <generatedKey column="id" sqlStatement="MySql" identity="true" /> -->
-		<!-- </table> -->
-		<!-- <table tableName="g_card_user_rel"> -->
-		<!-- <generatedKey column="id" sqlStatement="MySql" identity="true" /> -->
-		<!-- </table> -->
-		<table tableName="c_case">
+		<table tableName="u_org_group">
 			<generatedKey column="id" sqlStatement="MySql"
 				identity="true" />
 		</table>
