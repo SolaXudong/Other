@@ -2,6 +2,7 @@ package com.xu.tt.dto;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +26,9 @@ public class User {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+//	private Integer id;
+	@Column(name = "case_id")
+	private String caseId;
 
 	/**
 	 * 姓名
