@@ -29,10 +29,10 @@
 			targetProject="src/main/java" type="XMLMAPPER" />
 
 		<!-- 要生成的表名（加了主键自增） -->
-		<table tableName="u_org_group">
-			<generatedKey column="id" sqlStatement="MySql"
-				identity="true" />
-		</table>
+		<!-- <table tableName="u_org_group"> -->
+		<!-- <generatedKey column="id" sqlStatement="MySql" -->
+		<!-- identity="true" /> -->
+		<!-- </table> -->
 
 	</context>
 </generatorConfiguration>

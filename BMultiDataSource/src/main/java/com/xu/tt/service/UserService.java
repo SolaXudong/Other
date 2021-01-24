@@ -22,7 +22,7 @@ public class UserService {
 	UserMapper userMapper;
 
 	public User selectOne() {
-		return userMapper.selectOne(User.builder().id(1).build());
+		return userMapper.selectOne(User.builder().build());
 	}
 
 	public void insert(User dto) throws Exception {
@@ -53,7 +53,7 @@ public class UserService {
 	@Transactional
 	@RoutingDB(DBContextHolder.DBType.SLAVE)
 	public void transaction() throws Exception {
-		int rs = userMapper.updateByPrimaryKeySelective(User.builder().id(2).age(1).build());
+		int rs = userMapper.updateByPrimaryKeySelective(User.builder().age(1).build());
 		log.info("########## update-{}", rs);
 //		int a = 1 / 0;
 	}
@@ -61,14 +61,14 @@ public class UserService {
 	@Transactional
 	@RoutingDB(DBContextHolder.DBType.MASTER)
 	public void transactionMultiP1() throws Exception {
-		int rs = userMapper.updateByPrimaryKeySelective(User.builder().id(2).age(1).build());
+		int rs = userMapper.updateByPrimaryKeySelective(User.builder().age(1).build());
 		log.info("########## update 1: {}", rs);
 	}
 
 	@Transactional
 	@RoutingDB(DBContextHolder.DBType.SLAVE)
 	public void transactionMultiP2() throws Exception {
-		int rs = userMapper.updateByPrimaryKeySelective(User.builder().id(2).age(2).build());
+		int rs = userMapper.updateByPrimaryKeySelective(User.builder().age(2).build());
 		log.info("########## update 2: {}", rs);
 	}
 
