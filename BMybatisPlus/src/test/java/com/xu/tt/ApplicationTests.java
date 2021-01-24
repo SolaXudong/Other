@@ -17,9 +17,12 @@ import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import com.xu.tt.entity.GUser;
 import com.xu.tt.entity.User;
+import com.xu.tt.entity.UserNew;
 import com.xu.tt.mapper.GUserMapper;
 import com.xu.tt.mapper.UserMapper;
+import com.xu.tt.mapper.UserNewMapper;
 import com.xu.tt.service.IUserService;
+import com.xu.tt.service.UserNewService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,7 +39,11 @@ public class ApplicationTests {
 	@Autowired
 	private UserMapper uMapper;
 	@Autowired
+	private UserNewMapper userNewMapper;
+	@Autowired
 	private IUserService userService;
+	@Autowired
+	private UserNewService userNewService;
 
 	@Test
 	public void testSelectOne() {
@@ -121,13 +128,24 @@ public class ApplicationTests {
 //		List<GUser> list3 = userMapper.selectUser3();
 //		log.info("##### {}", list3.stream().map(t -> t.getUserNm()).collect(Collectors.toList()));
 //		log.info("##### {}", userMapper.updateC(ImmutableMap.of("id", 402, "name", "moumou")));
-		ArrayList<User> list = Lists.newArrayList();
-		for (int i = 1; i <= 10; i++)
-			list.add(User.builder().id(i).name("哈哈_" + i).age(10 + i).birth(new Date()).build());
-//		userMapper.insertListCustom(list); // 100000-3.0s)
-//		userService.saveBatch(list); // 100000-15s
-//		for (User dto : list)
-//			uMapper.insert(dto); // 1000-5s
+		/** 批量添加 */
+		{
+			ArrayList<User> list = Lists.newArrayList();
+			for (int i = 1; i <= 2; i++)
+				list.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
+//			userMapper.insertListCustom(list); // 100000-3.0s)
+//			userService.saveBatch(list); // 100000-15s
+		}
+		{
+			ArrayList<UserNew> list = Lists.newArrayList();
+			for (int i = 1; i <= 2; i++)
+				list.add(UserNew.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
+//			userNewService.saveBatch(list);
+		}
+		{
+//			for (User dto : list)
+//				uMapper.insert(dto); // 1000-5s
+		}
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}
 
