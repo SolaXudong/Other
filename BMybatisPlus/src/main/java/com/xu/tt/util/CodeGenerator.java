@@ -30,9 +30,9 @@ public class CodeGenerator {
 
 	private static String tables = "xxx";
 	private static String packageName = "cn.donganzichan.assets";
-	private static String url = "47.96.26.156:8306/assets"; // localhost:3306/test
+	private static String url = "localhost:3306/assets"; // localhost:3306/test
 	private static String userName = "root"; // root
-	private static String password = "etYhQX1bEzgAP8ju"; // shijie
+	private static String password = "shijie"; // shijie
 
 	private static String author = "XuDong";
 

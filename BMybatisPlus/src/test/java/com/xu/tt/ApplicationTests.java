@@ -104,9 +104,9 @@ public class ApplicationTests {
 		UpdateWrapper<GUser> uparamU = new UpdateWrapper<>();
 		uparamU.set("password", null).set("user_nm", "user_nm002").eq("id", "750");
 //		int rs = userMapper.update(null, uparamU);
-		GUser udtoU = GUser.builder().id(750).userNm("xxx").password(null).build();
-		int rs = userMapper.updateById(udtoU);
-		log.info("##### {}", rs);
+		GUser udtoU = GUser.builder().id(750).userNm("xxx").password(null).build(); // zhangchu
+//		int rs = userMapper.updateById(udtoU);
+//		log.info("##### {}", rs);
 	}
 
 	@Test
