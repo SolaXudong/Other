@@ -158,10 +158,10 @@ public class ExcelReadByPOI implements SheetContentsHandler {
 
 		/** 准备 */
 		String fileName = "#案件导入-新.xlsx";
-		fileName = "测试案件导入模板-Oct-26.xlsx"; // 10万数据8.6s
+		fileName = "tt.xlsx";
 		String path = org.springframework.util.StringUtils
 				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/") + fileName;
-		path = "D:/tt/excel/#测试专用/" + fileName;
+		path = "D:/tt/" + fileName;
 		/** 解析 */
 		List<JSONObject> list = ExcelReadByPOI.parse(path);
 		log.info("##### parse-{}", list.size());

@@ -36,14 +36,14 @@ public class ExcelReadByEasyExcel {
 					new AnalysisEventListener<List<String>>() {
 						@Override
 						public void invoke(List<String> obj, AnalysisContext context) {
-							if (context.readRowHolder().getRowIndex() == 0) {
-								tittle.addAll(obj);
-							} else {
-								JSONObject tmp = new JSONObject(true);
-								for (int i = 0; i < obj.size(); i++)
-									tmp.put(tittle.get(i), obj.get(i));
-								list.add(tmp);
-							}
+//							if (context.readRowHolder().getRowIndex() == 0) {
+//								tittle.addAll(obj);
+//							} else {
+//								JSONObject tmp = new JSONObject(true);
+//								for (int i = 0; i < obj.size(); i++)
+//									tmp.put(tittle.get(i), obj.get(i));
+//								list.add(tmp);
+//							}
 						}
 
 						@Override
@@ -64,14 +64,14 @@ public class ExcelReadByEasyExcel {
 
 		/** 准备 */
 		String fileName = "#案件导入-新.xlsx";
-		fileName = "测试案件导入模板-Oct-26.xlsx"; // 10万数据7.9s
+		fileName = "tt.xlsx";
 		String path = org.springframework.util.StringUtils
 				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/") + fileName;
-		path = "D:/tt/excel/#测试专用/" + fileName;
+		path = "D:/tt/" + fileName;
 		/** 解析 */
 		List<JSONObject> list = ExcelReadByEasyExcel.parse(path);
 		log.info("##### parse-{}", list.size());
-		System.out.println(list.get(0));
+//		System.out.println(list.get(0));
 //		list.stream().forEach(System.out::println);
 		/** 错误数据 */
 //		ArrayList<JSONObject> newList = Lists.newArrayList();
