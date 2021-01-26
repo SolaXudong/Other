@@ -70,9 +70,9 @@ public class Application {
 		Update mupdate = new Update().set("tag", "B");
 //		System.out.println(userService.update(query, mupdate));
 		/** 批量 */
-		for (int i = 0; i < 200; i++) {
-//			Query query2 = new Query(Criteria.where("idCard").is("410223_1"));
-//			Update update2 = new Update().set("X", "1");
+		for (int i = 0; i < 1000; i++) {
+//			Query query2 = new Query(Criteria.where("name").is("徐_1"));
+//			Update update2 = new Update().set("age", 101);
 //			mongoTemplate.updateMulti(query2, update2, "user");
 		}
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
