@@ -97,4 +97,19 @@ public class UserService {
 		return ListUtils.emptyIfNull(mongoTemplate.find(query, User.class));
 	}
 
+	public void xxx() {
+		/** 查询对象 */
+		Query query = new Query(Criteria.where("id").is(1));
+		/** 查询条件 */
+//		Criteria criteria = new Criteria();
+//		criteria.andOperator(criteria); // 传入条件集合
+//		criteria.orOperator(Criteria.where("properties1").is("value1"), Criteria.where("properties2").is("value2"));
+		/** 添加 */
+//		mongoTemplate.save(objectToSave, collectionName);
+		/** 修改单个 */
+//		mongoTemplate.updateFirst(query, update, collectionName);
+		/** 修改多个 */
+//		mongoTemplate.updateMulti(query, update, collectionName);
+	}
+
 }
