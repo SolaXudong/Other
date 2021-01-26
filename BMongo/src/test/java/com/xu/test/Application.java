@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
@@ -34,16 +35,29 @@ public class Application {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MongoTemplate mongoTemplate;
 
+	/**
+	 * @tips LOOK 添加
+	 */
 	@Test
-	public void testMongo() throws Exception {
+	public void testInsert() throws Exception {
 		long cost = System.currentTimeMillis();
-		/***/
 		log.info("########## 添加");
 		for (int i = 1; i <= 3; i++) {
 			User ipu = User.builder().id(1_0000L + i).name("徐_" + i).idCard("410223_" + i).birth(new Date()).build();
 //			System.out.println(userService.save(ipu));
 		}
+		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+	}
+
+	/**
+	 * @tips LOOK 修改
+	 */
+	@Test
+	public void testUpdate() throws Exception {
+		long cost = System.currentTimeMillis();
 		log.info("########## 修改");
 		User upu = User.builder() //
 				.id(1L) //
@@ -55,9 +69,33 @@ public class Application {
 				Criteria.where("idCard").in(Lists.newArrayList("410223_1,410223_2,410223_3".split(","))));
 		Update mupdate = new Update().set("tag", "B");
 //		System.out.println(userService.update(query, mupdate));
+		/** 批量 */
+		for (int i = 0; i < 200; i++) {
+//			Query query2 = new Query(Criteria.where("idCard").is("410223_1"));
+//			Update update2 = new Update().set("X", "1");
+//			mongoTemplate.updateMulti(query2, update2, "user");
+		}
+		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+	}
+
+	/**
+	 * @tips LOOK 删除
+	 */
+	@Test
+	public void testDelete() throws Exception {
+		long cost = System.currentTimeMillis();
 		log.info("########## 删除");
 		Query dpu = new Query(Criteria.where("id").is(1L));
 //		System.out.println(userService.delete(dpu));
+		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+	}
+
+	/**
+	 * @tips LOOK 查询
+	 */
+	@Test
+	public void testSelect() throws Exception {
+		long cost = System.currentTimeMillis();
 		log.info("########## 查询单个");
 		Query spu = new Query(Criteria.where("id").is(10030L));
 //		System.out.println(userService.find(spu));
