@@ -59,22 +59,22 @@ public class Application {
 	public void testUpdate() throws Exception {
 		long cost = System.currentTimeMillis();
 		log.info("########## 修改");
-		User upu = User.builder() //
-				.id(1L) //
-//				.idCard("410223_1") //
-				.name("徐_1-***") //
-				.build();
+//		User upu = User.builder() //
+//				.id(1L) //
+////				.idCard("410223_1") //
+//				.name("徐_1-***") //
+//				.build();
 //		System.out.println(userService.update(upu));
-		Query query = new Query(
-				Criteria.where("idCard").in(Lists.newArrayList("410223_1,410223_2,410223_3".split(","))));
-		Update mupdate = new Update().set("tag", "B");
+//		Query query = new Query(
+//				Criteria.where("idCard").in(Lists.newArrayList("410223_1,410223_2,410223_3".split(","))));
+//		Update mupdate = new Update().set("tag", "B");
 //		System.out.println(userService.update(query, mupdate));
 		/** 批量 */
-		for (int i = 0; i < 1000; i++) {
+//		for (int i = 1; i <= 10000; i++) { // 一万30秒
 //			Query query2 = new Query(Criteria.where("name").is("徐_1"));
-//			Update update2 = new Update().set("age", 101);
+//			Update update2 = new Update().set("age", i);
 //			mongoTemplate.updateMulti(query2, update2, "user");
-		}
+//		}
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}
 
