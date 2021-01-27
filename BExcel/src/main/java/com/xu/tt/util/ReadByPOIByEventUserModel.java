@@ -2,9 +2,6 @@ package com.xu.tt.util;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -113,32 +110,23 @@ public class ReadByPOIByEventUserModel {
 	public static void main(String[] args) throws Exception {
 		String path = "D:/tt/tt.xlsx";
 		System.out.println("start read");
-		int count = 20;
-		ExecutorService es = Executors.newFixedThreadPool(count);
-		CountDownLatch cl = new CountDownLatch(count);
-		for (int i = 0; i < count / 2; i++) {
-			es.submit(() -> {
-				try {
-					long cost = System.currentTimeMillis();
-					ReadByPOIByEventUserModel example = new ReadByPOIByEventUserModel();
-					example.processOneSheet(path);
-					log.info("########## POI cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			});
-			es.submit(() -> {
-				try {
-					long cost = System.currentTimeMillis();
-					ExcelReadByEasyExcel.parse(path);
-					log.info("########## Easy cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			});
+		for (int i = 0; i < 10; i++) {
+			try {
+				long cost = System.currentTimeMillis();
+				ReadByPOIByEventUserModel example = new ReadByPOIByEventUserModel();
+				example.processOneSheet(path);
+				log.info("########## POI cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				long cost = System.currentTimeMillis();
+				ExcelReadByEasyExcel.parse(path);
+				log.info("########## Easy cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		cl.await();
-		es.shutdown();
 	}
 
 }
