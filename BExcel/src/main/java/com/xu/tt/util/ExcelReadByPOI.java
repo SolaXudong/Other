@@ -163,10 +163,12 @@ public class ExcelReadByPOI implements SheetContentsHandler {
 				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/") + fileName;
 		path = "D:/tt/" + fileName;
 		/** 解析 */
-		List<JSONObject> list = ExcelReadByPOI.parse(path);
-		log.info("##### parse-{}", list.size());
-		System.out.println(list.get(0));
-//		list.stream().forEach(System.out::println);
+		for (int i = 1; i <= 1; i++) { // 16.153s
+			List<JSONObject> list = ExcelReadByPOI.parse(path);
+			log.info("##### parse-{}", list.size());
+			System.out.println(list.get(0));
+//			list.stream().forEach(System.out::println);
+		}
 		/** 写出 */
 
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");

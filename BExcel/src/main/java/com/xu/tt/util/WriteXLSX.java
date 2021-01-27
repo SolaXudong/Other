@@ -39,7 +39,7 @@ public class WriteXLSX {
 		List<JSONObject> list = Lists.newArrayList();
 		List<String> tittle = Lists.newArrayList();
 		try (OPCPackage p = OPCPackage.open(new File(path).getPath(), PackageAccess.READ)) {
-			XLSX2CSV csv = new XLSX2CSV(p);
+			ExcelReadByPOI2 csv = new ExcelReadByPOI2(p);
 			list = csv.process();
 			tittle = csv.getTittle();
 		}
@@ -63,7 +63,7 @@ public class WriteXLSX {
 					log.info(new BigDecimal(i - 1).divide(new BigDecimal(rowNum - 1), 4, RoundingMode.HALF_DOWN)
 							.multiply(new BigDecimal(100)).setScale(2) + "%");
 			}
-			CSVUtil.writeByStream(outDir, tittle, newList);
+			CSVUtil.writeByStream(outDir, tittle, newList, false);
 		}
 		/** 写出Excel */
 		if (type == 2) {

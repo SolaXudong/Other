@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
 
+import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
@@ -36,14 +37,14 @@ public class ExcelReadByEasyExcel {
 					new AnalysisEventListener<List<String>>() {
 						@Override
 						public void invoke(List<String> obj, AnalysisContext context) {
-//							if (context.readRowHolder().getRowIndex() == 0) {
-//								tittle.addAll(obj);
-//							} else {
-//								JSONObject tmp = new JSONObject(true);
-//								for (int i = 0; i < obj.size(); i++)
-//									tmp.put(tittle.get(i), obj.get(i));
-//								list.add(tmp);
-//							}
+							if (context.readRowHolder().getRowIndex() == 0) {
+								tittle.addAll(obj);
+							} else {
+								JSONObject tmp = new JSONObject(true);
+								for (int i = 0; i < obj.size(); i++)
+									tmp.put(tittle.get(i), obj.get(i));
+								list.add(tmp);
+							}
 						}
 
 						@Override
@@ -69,10 +70,12 @@ public class ExcelReadByEasyExcel {
 				.cleanPath(System.getProperty("user.dir") + "/src/main/java/com/xu/tt/util/") + fileName;
 		path = "D:/tt/" + fileName;
 		/** 解析 */
-		List<JSONObject> list = ExcelReadByEasyExcel.parse(path);
-		log.info("##### parse-{}", list.size());
-//		System.out.println(list.get(0));
-//		list.stream().forEach(System.out::println);
+		for (int i = 1; i <= 1; i++) { // 20.96s
+			List<JSONObject> list = ExcelReadByEasyExcel.parse(path);
+			log.info("##### parse-{}", list.size());
+			System.out.println(list.get(0));
+//			list.stream().forEach(System.out::println);
+		}
 		/** 错误数据 */
 //		ArrayList<JSONObject> newList = Lists.newArrayList();
 //		for (JSONObject obj : list) {
@@ -81,6 +84,7 @@ public class ExcelReadByEasyExcel {
 //			newObj.putAll(obj);
 //			newList.add(newObj);
 //		}
+
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 
 		/** 写出 */

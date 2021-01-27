@@ -19,6 +19,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
@@ -220,29 +221,68 @@ public class CSVUtil {
 		System.out.println("Excel: " + (t4 - t3));
 	}
 
-	public static void writeByStream(String outDir, List<String> tittle, ArrayList<JSONObject> newList) {
-		try (FileOutputStream fos = new FileOutputStream(outDir);
+	/**
+	 * @tips LOOK 写出CSV（IO流方式）
+	 * @tips outDir-输出全路径（含文件名）
+	 * @tips tittleList-标题
+	 * @tips dataList-数据
+	 * @tips isAppend-是否追加（true-是）
+	 */
+	public static void writeByStream(String outDir, List<String> tittleList, List<JSONObject> dataList,
+			boolean isAppend) {
+		log.info("##### 写出表格开始……");
+		long cost = System.currentTimeMillis();
+		if (StringUtils.isEmpty(outDir)) {
+			log.info("##### 解析失败，输出路径不能为空");
+			return;
+		}
+		try (FileOutputStream fos = new FileOutputStream(outDir, isAppend);
 				OutputStreamWriter osw = new OutputStreamWriter(fos, "GBK");
 				BufferedWriter bw = new BufferedWriter(osw);) {
 			// 表头
-			for (String k : tittle)
-				bw.append(k + ",");
-			bw.append("\n");
-			// 表体
-			for (JSONObject obj : newList) {
-				ArrayList<String> _list = Lists.newArrayList(obj.keySet());
-				for (int i = 0; i < _list.size(); i++) {
-					String _str = StringUtils.isEmpty(obj.getString(_list.get(i))) ? "" : obj.getString(_list.get(i));
-					if (i == _list.size() - 1)
-						bw.append(_str + "\t");
-					else
-						bw.append(_str + "\t,");
+			if (CollectionUtils.isNotEmpty(tittleList)) {
+				for (String k : tittleList) {
+					bw.append(k + ",");
 				}
 				bw.append("\n");
+			}
+			// 表体
+			if (CollectionUtils.isNotEmpty(dataList)) {
+				for (JSONObject obj : dataList) {
+					ArrayList<String> _list = Lists.newArrayList(obj.keySet());
+					for (int i = 0; i < _list.size(); i++) {
+						String val = obj.getString(_list.get(i));
+						String _str = StringUtils.isEmpty(val) ? "" : val;
+						if (i == _list.size() - 1) {
+							bw.append(_str + "\t");
+						} else {
+							bw.append(_str + "\t,");
+						}
+					}
+					bw.append("\n");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		log.info("##### 写出表格结束，cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+	}
+
+	public static void main(String[] args) {
+		/** 使用示例 */
+		// 准备数据
+		String outDir = "D:/tt/1.csv";
+		ArrayList<String> tittle = Lists.newArrayList("字段一", "字段二", "字段三");
+		// 只写表头
+		CSVUtil.writeByStream(outDir, tittle, null, false);
+		// 写一行
+		ArrayList<JSONObject> newList1 = Lists.newArrayList();
+		newList1.add(JSONObject.parseObject("{'field1':'A1','field2':'B1','field3':'C1'}"));
+		CSVUtil.writeByStream(outDir, null, newList1, true);
+		// 再写一行
+		ArrayList<JSONObject> newList2 = Lists.newArrayList();
+		newList2.add(JSONObject.parseObject("{'field1':'A2','field2':'B2','field3':'C3'}"));
+		CSVUtil.writeByStream(outDir, null, newList2, true);
 	}
 
 }
