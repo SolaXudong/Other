@@ -70,14 +70,14 @@ class ApplicationTests {
 		{ // 手写
 			List<User> list = Lists.newArrayList();
 			for (int i = 1; i <= 2; i++)
-				list.add(User.builder().id(i).name("哈哈_" + i).age(10 + i).birth(new Date()).build());
+				list.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
 //			System.out.println(uMapper.insertListCustom(list)); // 10000-3s
 //			System.out.println(uMapper2.insertList(list));
 		}
 		{ // 生成
 			List<UserNew> list = Lists.newArrayList();
 			for (int i = 1; i <= 2; i++)
-				list.add(UserNew.builder().userId("abc" + i).name("哈哈_" + i).age(10 + i).birth(new Date()).build());
+				list.add(UserNew.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
 //			System.out.println(userNewMapper2.insertList(list));
 		}
 		{ // 不用批量

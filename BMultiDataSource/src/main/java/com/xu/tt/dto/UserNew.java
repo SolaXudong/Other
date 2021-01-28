@@ -17,9 +17,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "user_new")
 public class UserNew {
+//	@Id
+//	@Column(name = "user_id")
+//	private String userId;
 	@Id
-	@Column(name = "user_id")
-	private String userId;
+	private Integer id;
 
 	private String name;
 
