@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.BulkOperations;
+import org.springframework.data.mongodb.core.BulkOperations.BulkMode;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -18,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
+import com.mongodb.bulk.BulkWriteResult;
 import com.xu.tt.dto.User;
 import com.xu.tt.service.UserService;
 
@@ -76,7 +79,7 @@ public class Application {
 //			mongoTemplate.updateMulti(query2, update2, "user");
 //			bulkOps.updateMulti(query2, update2);
 		}
-//		com.mongodb.bulk.BulkWriteResult result = bulkOps.execute();
+//		BulkWriteResult result = bulkOps.execute();
 //		int modifiedCount = result.getModifiedCount();
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}
