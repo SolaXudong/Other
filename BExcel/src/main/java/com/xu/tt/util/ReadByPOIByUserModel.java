@@ -23,8 +23,9 @@ public class ReadByPOIByUserModel {
 	public static void main(String[] args) {
 		long cost = System.currentTimeMillis();
 		String path = "D:/tt/tt.xlsx";
-		try {
-			System.out.println("start read");
+		System.out.println("start read");
+		for (int i = 1; i <= 10; i++) { // 44.166s
+			long cost2 = System.currentTimeMillis();
 			try {
 				Workbook wb = null;
 				File file = new File(path);
@@ -33,15 +34,14 @@ public class ReadByPOIByUserModel {
 				Sheet sheet = wb.getSheetAt(0);
 				for (Row row : sheet) {
 					for (Cell cell : row) {
-						System.out.println("row:" + row.getRowNum() + ",cell:" + cell.toString());
+//						System.out.println("row:" + row.getRowNum() + ",cell:" + cell.toString());
 					}
 				}
 				wb.close();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			log.info("########## {}", (System.currentTimeMillis() - cost2) / 1000F + "s");
 		}
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}

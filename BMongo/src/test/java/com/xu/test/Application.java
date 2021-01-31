@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.BulkOperations;
+import org.springframework.data.mongodb.core.BulkOperations.BulkMode;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -18,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
-import com.google.common.collect.Lists;
+import com.mongodb.bulk.BulkWriteResult;
 import com.xu.tt.dto.User;
 import com.xu.tt.service.UserService;
 
@@ -59,22 +61,26 @@ public class Application {
 	public void testUpdate() throws Exception {
 		long cost = System.currentTimeMillis();
 		log.info("########## 修改");
-		User upu = User.builder() //
-				.id(1L) //
-//				.idCard("410223_1") //
-				.name("徐_1-***") //
-				.build();
+//		User upu = User.builder() //
+//				.id(1L) //
+////				.idCard("410223_1") //
+//				.name("徐_1-***") //
+//				.build();
 //		System.out.println(userService.update(upu));
-		Query query = new Query(
-				Criteria.where("idCard").in(Lists.newArrayList("410223_1,410223_2,410223_3".split(","))));
-		Update mupdate = new Update().set("tag", "B");
+//		Query query = new Query(
+//				Criteria.where("idCard").in(Lists.newArrayList("410223_1,410223_2,410223_3".split(","))));
+//		Update mupdate = new Update().set("tag", "B");
 //		System.out.println(userService.update(query, mupdate));
 		/** 批量 */
-		for (int i = 0; i < 1000; i++) {
-//			Query query2 = new Query(Criteria.where("name").is("徐_1"));
-//			Update update2 = new Update().set("age", 101);
+//		BulkOperations bulkOps = mongoTemplate.bulkOps(BulkMode.UNORDERED, "user");
+		for (int i = 1; i <= 2; i++) { // 一万30秒
+			Query query2 = new Query(Criteria.where("name").is("徐_1"));
+			Update update2 = new Update().set("age", i + 10);
 //			mongoTemplate.updateMulti(query2, update2, "user");
+//			bulkOps.updateMulti(query2, update2);
 		}
+//		BulkWriteResult result = bulkOps.execute();
+//		int modifiedCount = result.getModifiedCount();
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}
 

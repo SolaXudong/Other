@@ -2,8 +2,6 @@ package com.xu.tt.dto;
 
 import java.util.Date;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -24,7 +22,6 @@ public class User {
 	 * 主键： 1-xx 2-yy 3-zz
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	/**

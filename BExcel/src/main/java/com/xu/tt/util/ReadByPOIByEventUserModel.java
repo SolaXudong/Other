@@ -108,25 +108,16 @@ public class ReadByPOIByEventUserModel {
 	}
 
 	public static void main(String[] args) throws Exception {
+		long cost = System.currentTimeMillis();
 		String path = "D:/tt/tt.xlsx";
 		System.out.println("start read");
-		for (int i = 0; i < 10; i++) {
-			try {
-				long cost = System.currentTimeMillis();
-				ReadByPOIByEventUserModel example = new ReadByPOIByEventUserModel();
-				example.processOneSheet(path);
-				log.info("########## POI cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			try {
-				long cost = System.currentTimeMillis();
-				ExcelReadByEasyExcel.parse(path);
-				log.info("########## Easy cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		for (int i = 1; i <= 10; i++) { // 17.105s
+			long cost2 = System.currentTimeMillis();
+			ReadByPOIByEventUserModel example = new ReadByPOIByEventUserModel();
+			example.processOneSheet(path);
+			log.info("########## {}", (System.currentTimeMillis() - cost2) / 1000F + "s");
 		}
+		log.info("########## POI cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}
 
 }

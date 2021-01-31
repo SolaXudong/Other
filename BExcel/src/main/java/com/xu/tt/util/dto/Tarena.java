@@ -1,4 +1,4 @@
-package com.xu.tt.util;
+package com.xu.tt.util.dto;
 //package com.xu.tt.util;
 //
 //import java.io.OutputStream;

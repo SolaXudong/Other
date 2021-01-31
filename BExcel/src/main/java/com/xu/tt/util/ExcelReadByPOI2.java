@@ -38,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
  * @tips 代码参考：https://svn.apache.org/repos/asf/poi/trunk/src/examples/src/org/apache/poi/examples/xssf/eventusermodel/XLSX2CSV.java
  */
 @Slf4j
-public class XLSX2CSV {
+public class ExcelReadByPOI2 {
 
 	List<String> tittle = Lists.newArrayList(); // 表头
 	List<JSONObject> list = Lists.newArrayList(); // 数据
@@ -84,7 +84,7 @@ public class XLSX2CSV {
 
 	private final OPCPackage xlsxPackage;
 
-	public XLSX2CSV(OPCPackage pkg) {
+	public ExcelReadByPOI2(OPCPackage pkg) {
 		this.xlsxPackage = pkg;
 	}
 
@@ -126,17 +126,19 @@ public class XLSX2CSV {
 	public static void main(String[] args) throws Exception {
 		long cost = System.currentTimeMillis();
 
-		String fileName = "案件导入模板.xlsx";
-		fileName = "测试案件导入模板-Oct-26.xlsx"; // 10万数据7.7s
-		String path = "D:/tt/excel/#测试专用/" + fileName;
+		String fileName = "xxx.xlsx";
+		fileName = "tt.xlsx";
+		String path = "D:/tt/" + fileName;
 
-		List<JSONObject> list = Lists.newArrayList();
-		// The package open is instantaneous, as it should be.
-		try (OPCPackage p = OPCPackage.open(new File(path).getPath(), PackageAccess.READ)) {
-			list = new XLSX2CSV(p).process();
+		for (int i = 1; i <= 1; i++) { // 16.165s
+			List<JSONObject> list = Lists.newArrayList();
+			// The package open is instantaneous, as it should be.
+			try (OPCPackage p = OPCPackage.open(new File(path).getPath(), PackageAccess.READ)) {
+				list = new ExcelReadByPOI2(p).process();
+			}
+			log.info("##### parse-{}", list.size());
+			System.out.println(list.get(0));
 		}
-		log.info("##### parse-{}", list.size());
-		System.out.println(list.get(0));
 
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}
