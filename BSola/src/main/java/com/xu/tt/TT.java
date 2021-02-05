@@ -40,7 +40,7 @@ public class TT {
 		System.out.println(RandomStringUtils.random(4, "0123456789"));
 		/** 读配置文件 */
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("application");
-		System.out.println(resourceBundle.getString("spring.profiles.active"));
+		System.out.println(resourceBundle.getString("logging.file"));
 		/** 转数字 */
 		System.out.println(String.format("%03d", 1));
 		/** 加密（不可逆） */
