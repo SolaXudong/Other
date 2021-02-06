@@ -1,5 +1,7 @@
 package com.xu.tt.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +34,22 @@ public class UserController {
 		log.info("##### controller getOne");
 		User user = userService.getOne(id);
 		return user;
+	}
+
+	@ResponseBody
+	@RequestMapping("/findByIdBetween/{min}/{max}")
+	public Object findByIdBetween(@PathVariable("min") Integer min, @PathVariable("max") Integer max) {
+		log.info("##### controller findByIdBetween");
+		List<User> userList = userService.findByIdBetween(min, max);
+		return userList;
+	}
+
+	@ResponseBody
+	@RequestMapping("/findUserByIdL")
+	public Object findUserByIdLt() {
+		log.info("##### controller findUserByIdLt");
+		List<User> userList = userService.findUserByIdLt();
+		return userList;
 	}
 
 }

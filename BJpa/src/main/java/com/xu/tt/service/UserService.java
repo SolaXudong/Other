@@ -1,5 +1,7 @@
 package com.xu.tt.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,18 @@ public class UserService {
 		log.info("##### service getOne");
 		User user = userDao.getOne(id);
 		return user;
+	}
+
+	public List<User> findByIdBetween(Integer min, Integer max) {
+		log.info("##### service findByIdBetween");
+		List<User> userList = userDao.findByIdBetween(min, max);
+		return userList;
+	}
+
+	public List<User> findUserByIdLt() {
+		log.info("##### service findUserByIdLt");
+		List<User> userList = userDao.findUserByIdLt();
+		return userList;
 	}
 
 }
