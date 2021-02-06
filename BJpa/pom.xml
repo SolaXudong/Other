@@ -5,9 +5,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.xu.tt</groupId>
-	<artifactId>BSola</artifactId>
+	<artifactId>BJpa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>BSola</name>
+	<name>BJpa</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
@@ -20,7 +20,8 @@
 	<properties>
 		<start-class>com.xu.tt.Application</start-class>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<project.reporting.outputEncoding>UTF-8
+		</project.reporting.outputEncoding>
 		<lombok.version>1.18.10</lombok.version>
 		<java.version>1.8</java.version>
 	</properties>
@@ -35,16 +36,18 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
-		<!-- 【Thymeleaf】模板引擎，依赖 -->
+		<!-- 【jpa】 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<!-- 【@ConfigurationProperties的执行器配置，注解需要,配置元数据文件】configuration/配置处理器【有时候要用传统的xml或properties配置】 -->
+		<!-- 【mysql】(数据库驱动) -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-configuration-processor</artifactId>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 		<!-- 【lombok】 -->
 		<dependency>
@@ -87,6 +90,11 @@
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.73</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
 	</dependencies>
 
