@@ -110,8 +110,8 @@ class ApplicationTests {
 				exUser.createCriteria().andIn("id", userIdList);
 //				int _countUser = uMapper.selectCountByExample(exUser);
 //				System.out.println(_countUser);
-				List<User> uList = uMapper.selectByExample(exUser);
-				dataList.addAll(uList);
+//				List<User> uList = uMapper.selectByExample(exUser);
+//				dataList.addAll(uList);
 				log.info("##### select cost : {}s", (System.currentTimeMillis() - cost2) / 1000F);
 				cost2 = System.currentTimeMillis();
 				userIdList.clear();
