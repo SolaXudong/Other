@@ -69,15 +69,17 @@ class ApplicationTests {
 		long cost = System.currentTimeMillis();
 		{ // 手写
 			List<User> list = Lists.newArrayList();
-			for (int i = 1; i <= 2; i++)
+			for (int i = 1; i <= 2; i++) {
 				list.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
+			}
 //			System.out.println(uMapper.insertListCustom(list)); // 10000-3s
 //			System.out.println(uMapper2.insertList(list));
 		}
 		{ // 生成
 			List<UserNew> list = Lists.newArrayList();
-			for (int i = 1; i <= 2; i++)
+			for (int i = 1; i <= 2; i++) {
 				list.add(UserNew.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
+			}
 //			System.out.println(userNewMapper2.insertList(list));
 		}
 		{ // 不用批量
@@ -86,6 +88,21 @@ class ApplicationTests {
 //				list.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
 //			for (User dto : list)
 //				userService.insert(dto); // 1000-xs
+		}
+		{/** 批量查询count(1) */
+//			ArrayList<Integer> userIdList = Lists.newArrayList();
+//			for (int i = 13_0000; i < 20_0000; i++) {
+//				userIdList.add(i);
+//				if (userIdList.size() == 10000) {
+//					Example exUser = new Example(User.class);
+//					exUser.createCriteria().andIn("id", userIdList);
+//					int _countUser = uMapper.selectCountByExample(exUser);
+//					System.out.println(_countUser);
+//					log.info("########## select count cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+//					cost = System.currentTimeMillis();
+//					userIdList.clear();
+//				}
+//			}
 		}
 		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
 	}
