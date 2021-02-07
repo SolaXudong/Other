@@ -90,16 +90,17 @@ class ApplicationTests {
 //				userService.insert(dto); // 1000-xs
 		}
 		{/** 批量查询count(1) */
+//			long cost2 = System.currentTimeMillis();
 //			ArrayList<Integer> userIdList = Lists.newArrayList();
-//			for (int i = 13_0000; i < 20_0000; i++) {
+//			for (int i = 0; i < 20_0000; i++) {
 //				userIdList.add(i);
-//				if (userIdList.size() == 10000) {
+//				if (userIdList.size() == 2_0000) {
 //					Example exUser = new Example(User.class);
 //					exUser.createCriteria().andIn("id", userIdList);
 //					int _countUser = uMapper.selectCountByExample(exUser);
 //					System.out.println(_countUser);
-//					log.info("########## select count cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
-//					cost = System.currentTimeMillis();
+//					log.info("########## select count cost : " + (System.currentTimeMillis() - cost2) / 1000F + "s");
+//					cost2 = System.currentTimeMillis();
 //					userIdList.clear();
 //				}
 //			}

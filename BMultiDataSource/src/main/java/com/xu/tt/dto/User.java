@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "user2")
 public class User {
 	/**
 	 * 主键： 1-xx 2-yy 3-zz
