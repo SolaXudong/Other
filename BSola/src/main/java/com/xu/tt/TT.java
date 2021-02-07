@@ -24,7 +24,7 @@ public class TT {
 		/***/
 //		testThreadPool();
 		/***/
-		log.info("##### cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+		log.info("##### cost : {}s", (System.currentTimeMillis() - cost) / 1000F);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class TT {
 		/** 求和 */
 		System.out.println(LongStream.rangeClosed(1, 3_0000_0000).parallel().reduce(0, Long::sum));
 		/***/
-		log.info("##### cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+		log.info("##### cost : {}s", (System.currentTimeMillis() - cost) / 1000F);
 	}
 
 	/**

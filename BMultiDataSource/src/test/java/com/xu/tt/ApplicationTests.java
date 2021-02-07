@@ -1,6 +1,7 @@
 package com.xu.tt;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,7 +27,6 @@ import com.xu.tt.dto.CCase;
 import com.xu.tt.dto.GUser;
 import com.xu.tt.dto.TExcel;
 import com.xu.tt.dto.User;
-import com.xu.tt.dto.UserNew;
 import com.xu.tt.service.B_UserService;
 import com.xu.tt.service.CCaseService;
 import com.xu.tt.service.UserService;
@@ -67,27 +67,57 @@ class ApplicationTests {
 	@Test
 	public void testBatchInsert() throws Exception {
 		long cost = System.currentTimeMillis();
-		{ // 手写
-			List<User> list = Lists.newArrayList();
-			for (int i = 1; i <= 2; i++)
-				list.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
-//			System.out.println(uMapper.insertListCustom(list)); // 10000-3s
-//			System.out.println(uMapper2.insertList(list));
-		}
-		{ // 生成
-			List<UserNew> list = Lists.newArrayList();
-			for (int i = 1; i <= 2; i++)
-				list.add(UserNew.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
-//			System.out.println(userNewMapper2.insertList(list));
+		long cost2 = System.currentTimeMillis();
+		{ // 手写 vs 生成
+//			List<User> insertList = Lists.newArrayList();
+//			int _total = 100_0000;
+//			for (int i = 1; i <= _total; i++) {
+//				insertList.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
+//				if (insertList.size() == 1_0000) {
+////					System.out.println(uMapper.insertListCustom(insertList)); // 100_0000-20s
+//					System.out.println(uMapper2.insertList(insertList)); // 100_0000-21s
+////					System.out.println(userNewMapper2.insertList(list));
+//					log.info("##### insert cost : {}s, {}/{}", (System.currentTimeMillis() - cost2) / 1000F, i, _total);
+//					cost2 = System.currentTimeMillis();
+//					insertList.clear();
+//				}
+//			}
 		}
 		{ // 不用批量
-//			List<User> list = Lists.newArrayList();
-//			for (int i = 1; i <= 2; i++)
-//				list.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
-//			for (User dto : list)
-//				userService.insert(dto); // 1000-xs
+//			List<User> insertList = Lists.newArrayList();
+//			int _total = 1000;
+//			for (int i = 1; i <= _total; i++)
+//				insertList.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
+//			for (User dto : insertList)
+//				userService.insert(dto); // 1000-4s
 		}
-		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+		log.info("##### cost : {}s", (System.currentTimeMillis() - cost) / 1000F);
+	}
+
+	/**
+	 * @tips LOOK 测批量查询
+	 */
+	@Test
+	public void testBatchSelect() throws Exception {
+		long cost = System.currentTimeMillis();
+		long cost2 = System.currentTimeMillis();
+		ArrayList<User> dataList = Lists.newArrayList();
+		ArrayList<Integer> userIdList = Lists.newArrayList();
+		for (int i = 0; i < 20_0000; i++) {
+			userIdList.add(i);
+			if (userIdList.size() == 1_0000) {
+				Example exUser = new Example(User.class);
+				exUser.createCriteria().andIn("id", userIdList);
+//				int _countUser = uMapper.selectCountByExample(exUser);
+//				System.out.println(_countUser);
+//				List<User> uList = uMapper.selectByExample(exUser);
+//				dataList.addAll(uList);
+				log.info("##### select cost : {}s", (System.currentTimeMillis() - cost2) / 1000F);
+				cost2 = System.currentTimeMillis();
+				userIdList.clear();
+			}
+		}
+		log.info("##### cost : {}s, size-{}", (System.currentTimeMillis() - cost) / 1000F, dataList.size());
 	}
 
 	/**
