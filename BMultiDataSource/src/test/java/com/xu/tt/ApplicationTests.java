@@ -84,12 +84,12 @@ class ApplicationTests {
 //			}
 		}
 		{ // 不用批量
-			List<User> insertList = Lists.newArrayList();
-			int _total = 1000;
-			for (int i = 1; i <= _total; i++)
-				insertList.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
-			for (User dto : insertList)
-				userService.insert(dto); // 1000-4s
+//			List<User> insertList = Lists.newArrayList();
+//			int _total = 1000;
+//			for (int i = 1; i <= _total; i++)
+//				insertList.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
+//			for (User dto : insertList)
+//				userService.insert(dto); // 1000-4s
 		}
 		log.info("##### cost : {}s", (System.currentTimeMillis() - cost) / 1000F);
 	}
