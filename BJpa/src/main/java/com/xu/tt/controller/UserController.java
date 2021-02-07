@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author XuDong 2021-02-06 22:08:30
+ * @tips localhost:8080
  */
 @Slf4j
 @Controller
@@ -26,7 +27,7 @@ public class UserController {
 
 	/**
 	 * @tips LOOK
-	 * @tips localhost:8080/user/getOne/1
+	 * @tips /getOne/1
 	 */
 	@ResponseBody
 	@RequestMapping("/getOne/{id}")
@@ -36,6 +37,10 @@ public class UserController {
 		return user;
 	}
 
+	/**
+	 * @tips LOOK
+	 * @tips /findByIdBetween/1/3
+	 */
 	@ResponseBody
 	@RequestMapping("/findByIdBetween/{min}/{max}")
 	public Object findByIdBetween(@PathVariable("min") Integer min, @PathVariable("max") Integer max) {
@@ -44,11 +49,15 @@ public class UserController {
 		return userList;
 	}
 
+	/**
+	 * @tips LOOK
+	 * @tips /findUserByIdLt/3
+	 */
 	@ResponseBody
-	@RequestMapping("/findUserByIdL")
-	public Object findUserByIdLt() {
+	@RequestMapping("/findUserByIdLt/{id}")
+	public Object findUserByIdLt(@PathVariable("id") Integer id) {
 		log.info("##### controller findUserByIdLt");
-		List<User> userList = userService.findUserByIdLt();
+		List<User> userList = userService.findUserByIdLt(id);
 		return userList;
 	}
 

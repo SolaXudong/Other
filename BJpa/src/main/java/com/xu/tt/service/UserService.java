@@ -32,9 +32,9 @@ public class UserService {
 		return userList;
 	}
 
-	public List<User> findUserByIdLt() {
+	public List<User> findUserByIdLt(int id) {
 		log.info("##### service findUserByIdLt");
-		List<User> userList = userDao.findUserByIdLt();
+		List<User> userList = userDao.findUserByIdLt(id);
 		return userList;
 	}
 

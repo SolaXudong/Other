@@ -15,7 +15,10 @@ public interface UserDao extends JpaRepository<User, Integer> {
 	List<User> findByIdBetween(int min, int max);
 
 	/** 自定义HQL */
-	@Query("select user from User user where id < 3")
-	List<User> findUserByIdLt();
+	/**
+	 * @tips 占位符：?1表示第一个位置的变量
+	 */
+	@Query("select user from User user where id < ?1")
+	List<User> findUserByIdLt(int id);
 
 }
