@@ -1,7 +1,5 @@
 package com.xu.tt;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,10 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.github.pagehelper.PageHelper;
-import com.google.common.collect.Lists;
 import com.xu.tt.entity.GUser;
-import com.xu.tt.entity.User;
-import com.xu.tt.entity.UserNew;
 import com.xu.tt.mapper.GUserMapper;
 import com.xu.tt.mapper.UserMapper;
 import com.xu.tt.mapper.UserNewMapper;
@@ -128,25 +123,39 @@ public class ApplicationTests {
 //		List<GUser> list3 = userMapper.selectUser3();
 //		log.info("##### {}", list3.stream().map(t -> t.getUserNm()).collect(Collectors.toList()));
 //		log.info("##### {}", userMapper.updateC(ImmutableMap.of("id", 402, "name", "moumou")));
+		log.info("##### cost : {}s", (System.currentTimeMillis() - cost) / 1000F);
+	}
+
+	@Test
+	public void testBatchInsert() {
+		log.info("##### batch insert");
+		long cost = System.currentTimeMillis();
+		long cost2 = System.currentTimeMillis();
 		/** 批量添加 */
 		{
-			ArrayList<User> list = Lists.newArrayList();
-			for (int i = 1; i <= 2; i++)
-				list.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
-//			userMapper.insertListCustom(list); // 100000-3.0s)
-//			userService.saveBatch(list); // 100000-15s
+//			ArrayList<User> insertList = Lists.newArrayList();
+//			int _total = 100_0000;
+//			for (int i = 1; i <= _total; i++) {
+//				insertList.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
+//				if (insertList.size() == 1_0000) {
+////					userMapper.insertListCustom(insertList); // 100_0000-21s
+////					userService.saveBatch(insertList); // 1_0000/3s（默认）
+////					userNewService.saveBatch(insertList);
+//					log.info("##### insert cost : {}s, {}/{}", (System.currentTimeMillis() - cost2) / 1000F, i, _total);
+//					cost2 = System.currentTimeMillis();
+//					insertList.clear();
+//				}
+//			}
 		}
 		{
-			ArrayList<UserNew> list = Lists.newArrayList();
-			for (int i = 1; i <= 2; i++)
-				list.add(UserNew.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
-//			userNewService.saveBatch(list);
+//			ArrayList<User> insertList = Lists.newArrayList();
+//			int _total = 1000;
+//			for (int i = 1; i <= _total; i++)
+//				insertList.add(User.builder().name("哈哈_" + i).age(10 + i).birth(new Date()).build());
+//			for (User dto : insertList)
+//				uMapper.insert(dto); // 1000-4s
 		}
-		{
-//			for (User dto : list)
-//				uMapper.insert(dto); // 1000-5s
-		}
-		log.info("########## cost : " + (System.currentTimeMillis() - cost) / 1000F + "s");
+		log.info("##### cost : {}s", (System.currentTimeMillis() - cost) / 1000F);
 	}
 
 }
